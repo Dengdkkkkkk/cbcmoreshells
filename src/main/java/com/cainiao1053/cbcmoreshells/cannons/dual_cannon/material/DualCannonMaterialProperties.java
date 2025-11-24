@@ -19,7 +19,7 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 										  FailureMode failureMode, boolean connectsInSurvival, boolean isWeldable,
 										  int weldDamage, int weldStressPenalty, float minimumSpread,
 										  float spreadReductionPerBarrel, int addedLifetime, float reloadTimeModifier,
-										   float durabilityMassModifier, float barrelGap, int combatCommandCooldown, int combatCommandDuration) {
+										   float durabilityMassModifier, float barrelGap, int combatCommandCooldown, int combatCommandDuration, boolean isSingleBarrel) {
 
 	public DualCannonMaterialProperties {
 		Objects.requireNonNull(failureMode, "property :failureMode is required");
@@ -70,9 +70,10 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 		float barrelGap = Math.max(GsonHelper.getAsFloat(obj, "barrel_gap", 0.5f), 0);
 		int combatCommandCooldown = Math.max(GsonHelper.getAsInt(obj, "combat_command_cooldown", 1800), 0);
 		int combatCommandDuration = Math.max(GsonHelper.getAsInt(obj, "combat_command_duration", 400), 0);
+		boolean isSingleBarrel = GsonHelper.getAsBoolean(obj, "is_single_barrel", false);
 		return new DualCannonMaterialProperties(minimumVelocityPerBarrel, weight, maxSafeBaseCharges, failureMode,
 			connectsInSurvival, isWeldable, weldDamage, weldStressPenalty, minimumSpread, spreadReductionPerBarrel, addedLifetime, reloadTimeModifier, durabilityMassModifier, barrelGap,
-				combatCommandCooldown, combatCommandDuration);
+				combatCommandCooldown, combatCommandDuration, isSingleBarrel);
 	}
 
 	public JsonObject serialize() {
@@ -93,6 +94,7 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 		obj.addProperty("barrel_gap", this.barrelGap);
 		obj.addProperty("combat_command_cooldown", this.combatCommandCooldown);
 		obj.addProperty("combat_command_duration", this.combatCommandDuration);
+		obj.addProperty("is_single_barrel", this.isSingleBarrel);
 		return obj;
 	}
 
@@ -112,7 +114,8 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 			.writeFloat(this.durabilityMassModifier)
 			.writeFloat(this.barrelGap);
 		buf.writeVarInt(this.combatCommandCooldown);
-		buf.writeVarInt(this.combatCommandDuration);
+		buf.writeVarInt(this.combatCommandDuration)
+				.writeBoolean(this.isSingleBarrel);
 	}
 
 	public static DualCannonMaterialProperties fromBuf(FriendlyByteBuf buf) {
@@ -132,9 +135,10 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 		float barrelGap = buf.readFloat();
 		int combatCommandCooldown = buf.readVarInt();
 		int combatCommandDuration = buf.readVarInt();
+		boolean isSingleBarrel = buf.readBoolean();
 		return new DualCannonMaterialProperties(minimumVelocityPerBarrel, weight, maxSafeBaseCharges, mode, connectsInSurvival,
 			isWeldable, weldDamage, weldStressPenalty, minimumSpread, spreadReductionPerBarrel, addedLifetime, reloadTimeModifier, durabilityMassModifier, barrelGap,
-				combatCommandCooldown, combatCommandDuration);
+				combatCommandCooldown, combatCommandDuration, isSingleBarrel);
 	}
 
 	public enum FailureMode implements StringRepresentable {
@@ -181,6 +185,7 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 		private float barrelGap;
 		private int combatCommandCooldown;
 		private int combatCommandDuration;
+		private boolean isSingleBarrel;
 
 		private Builder() {
 		}
@@ -266,6 +271,11 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 			return this;
 		}
 
+		public Builder isSingleBarrel(boolean isSingleBarrel) {
+			this.isSingleBarrel = isSingleBarrel;
+			return this;
+		}
+
 		public DualCannonMaterialProperties build() {
 			if (this.failureMode == null) {
 				throw new IllegalStateException("Missing required property: failureMode");
@@ -273,7 +283,7 @@ public record DualCannonMaterialProperties(double minimumVelocityPerBarrel, floa
 			return new DualCannonMaterialProperties(this.minimumVelocityPerBarrel, this.weight,
 				this.maxSafePropellantStress, this.failureMode, this.connectsInSurvival, this.isWeldable,
 				this.weldDamage, this.weldStressPenalty, this.minimumSpread, this.spreadReductionPerBarrel, this.addedLifetime, this.reloadTimeModifier,
-					this.durabilityMassModifier, this.barrelGap, this.combatCommandCooldown, this.combatCommandDuration);
+					this.durabilityMassModifier, this.barrelGap, this.combatCommandCooldown, this.combatCommandDuration, this.isSingleBarrel);
 		}
 	}
 }

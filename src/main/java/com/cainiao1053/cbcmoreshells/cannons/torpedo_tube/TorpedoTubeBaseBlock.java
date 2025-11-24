@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.material.PushReaction;
-import rbasamoyai.createbigcannons.cannons.big_cannons.material.BigCannonMaterial;
 
 public abstract class TorpedoTubeBaseBlock extends DirectionalBlock implements TorpedoTubeBlock {
 

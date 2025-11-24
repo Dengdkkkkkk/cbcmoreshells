@@ -12,10 +12,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import rbasamoyai.createbigcannons.index.CBCRecipeTypes;
-import rbasamoyai.createbigcannons.munitions.FuzedItemMunition;
-//import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
-import rbasamoyai.createbigcannons.munitions.FuzedProjectileBlockItem;
 import rbasamoyai.createbigcannons.munitions.fuzes.FuzeItem;
 
 public class ShellFuzingDeployerRecipe implements Recipe<Container> {

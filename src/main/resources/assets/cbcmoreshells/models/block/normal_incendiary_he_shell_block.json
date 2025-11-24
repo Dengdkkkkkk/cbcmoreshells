@@ -1,0 +1,9 @@
+{
+  "parent": "cbcmoreshells:block/dual_cannon_projectile_block",
+  "textures": {
+    "bottom": "createbigcannons:block/projectile/he_shell_bottom",
+    "particle": "cbcmoreshells:block/projectile/incendiary_he_shell_top",
+    "side": "cbcmoreshells:block/projectile/incendiary_he_shell",
+    "top": "cbcmoreshells:block/projectile/incendiary_he_shell_top"
+  }
+}

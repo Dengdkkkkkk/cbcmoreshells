@@ -96,7 +96,6 @@ public class ShipProximityFuzeItem extends FuzeItem implements MenuProvider {
 
 		for(var ship :shipWorldCore.getLoadedShips()){
 			AABBdc shipABdc = ship.getWorldAABB();
-			//if(shipABdc==null){continue;}
 			AABB shipAABB = toAABB(shipABdc);
 			if(currentMovementRegion.intersects(shipAABB)){
 				return true;

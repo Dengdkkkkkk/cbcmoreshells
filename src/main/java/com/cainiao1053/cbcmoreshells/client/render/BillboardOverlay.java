@@ -2,19 +2,14 @@ package com.cainiao1053.cbcmoreshells.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import org.joml.Matrix3f;
-import org.joml.Quaternionf;
-import org.joml.Matrix4f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import com.simibubi.create.foundation.render.RenderTypes;
-import net.minecraft.client.particle.ParticleRenderType;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 
 public class BillboardOverlay implements ExtraEntityLayer {

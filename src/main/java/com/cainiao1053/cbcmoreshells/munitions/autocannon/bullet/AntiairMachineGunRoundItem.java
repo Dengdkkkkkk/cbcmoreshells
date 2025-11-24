@@ -1,27 +1,21 @@
 package com.cainiao1053.cbcmoreshells.munitions.autocannon.bullet;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.cainiao1053.cbcmoreshells.CBCMSEntityTypes;
 import com.cainiao1053.cbcmoreshells.index.CBCMSMunitionPropertiesHandlers;
-import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import rbasamoyai.createbigcannons.CreateBigCannons;
-import rbasamoyai.createbigcannons.index.CBCEntityTypes;
 import rbasamoyai.createbigcannons.index.CBCItems;
-import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonAmmoItem;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonAmmoType;
 import rbasamoyai.createbigcannons.munitions.autocannon.config.AutocannonProjectilePropertiesComponent;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class AntiairMachineGunRoundItem extends Item implements AutocannonAmmoItem {
 

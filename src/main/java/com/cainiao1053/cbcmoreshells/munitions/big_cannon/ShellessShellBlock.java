@@ -3,7 +3,6 @@ package com.cainiao1053.cbcmoreshells.munitions.big_cannon;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import rbasamoyai.createbigcannons.index.CBCBlockEntities;
 import rbasamoyai.createbigcannons.munitions.big_cannon.FuzedBlockEntity;
-import rbasamoyai.createbigcannons.munitions.big_cannon.FuzedProjectileBlock;
 
 public abstract class ShellessShellBlock<ENTITY_TYPE extends ShellessFuzedBigCannonProjectile>
 	extends ShellessFuzedProjectileBlock<FuzedBlockEntity, ENTITY_TYPE> {

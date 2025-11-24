@@ -1,21 +1,12 @@
 package com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_ap_shell;
 
-import javax.annotation.Nonnull;
-
 import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
-import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
 import com.cainiao1053.cbcmoreshells.index.CBCMSMunitionPropertiesHandlers;
-import com.cainiao1053.cbcmoreshells.munitions.big_cannon.ShellessFuzedBigCannonProjectile;
-//import com.cainiao1053.cbcmoreshells.munitions.big_cannon.config.BigCannonShellessShellProperties;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.DualCannonProjectileBlock;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.FuzedDualCannonProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonProperties;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonPropertiesComponent;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.FuzedRackedProjectile;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.config.RackedProjectileProperties;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.config.RackedProjectilePropertiesComponent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -24,25 +15,23 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import org.slf4j.Logger;
 import rbasamoyai.createbigcannons.CreateBigCannons;
 import rbasamoyai.createbigcannons.block_armor_properties.BlockArmorPropertiesHandler;
 import rbasamoyai.createbigcannons.block_armor_properties.BlockArmorPropertiesProvider;
 import rbasamoyai.createbigcannons.config.CBCConfigs;
-import rbasamoyai.createbigcannons.index.CBCBlocks;
 import rbasamoyai.createbigcannons.munitions.ImpactExplosion;
 import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.ShellExplosion;
 import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonFuzePropertiesComponent;
-//import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonProjectilePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.fuzes.TimedFuzeItem;
 import rbasamoyai.createbigcannons.network.ClientboundPlayBlockHitEffectPacket;
 import rbasamoyai.createbigcannons.utils.CBCUtils;
+
+import javax.annotation.Nonnull;
 
 public class NormalAPShellProjectile extends FuzedDualCannonProjectile {
 

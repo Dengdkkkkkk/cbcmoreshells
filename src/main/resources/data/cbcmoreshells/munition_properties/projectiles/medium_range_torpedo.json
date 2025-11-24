@@ -13,7 +13,7 @@
   "can_squib": true,
   "added_recoil": 1.0,
   "base_fuze": false,
-  "explosive_power": 3.5,
+  "explosive_power": 3.75,
   "max_charges": 10,
   "penetration": 2.5,
   "lifetime": 385,
@@ -21,5 +21,5 @@
   "deflection": 0.70,
   "buoyancy_factor": 0.14,
   "torpedo_speed": 0.78,
-  "torpedo_spread": 4.0
+  "torpedo_spread": 7.0
 }

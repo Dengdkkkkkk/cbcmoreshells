@@ -4,7 +4,6 @@ import com.cainiao1053.cbcmoreshells.CBCMSEntityTypes;
 import com.cainiao1053.cbcmoreshells.munitions.big_cannon.ShellessShellBlock;
 import net.minecraft.world.entity.EntityType;
 import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
-import rbasamoyai.createbigcannons.munitions.big_cannon.SimpleShellBlock;
 
 
 public class SAPShellBlock extends ShellessShellBlock<SAPShellProjectile> {

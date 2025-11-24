@@ -1,7 +1,6 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon.hesh_shell;
 
-import javax.annotation.Nonnull;
-
+import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.EntityType;
@@ -19,7 +18,7 @@ import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonProjecti
 import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
 
-import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
+import javax.annotation.Nonnull;
 
 public class HESHShellProjectile extends FuzedBigCannonProjectile {
 

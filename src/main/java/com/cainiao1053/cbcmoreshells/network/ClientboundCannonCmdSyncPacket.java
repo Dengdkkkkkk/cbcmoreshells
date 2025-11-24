@@ -2,7 +2,6 @@ package com.cainiao1053.cbcmoreshells.network;
 
 import com.cainiao1053.cbcmoreshells.cannon_control.contraption.MountedDualCannonContraption;
 import com.simibubi.create.content.contraptions.Contraption;
-import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketListener;
@@ -13,7 +12,6 @@ import rbasamoyai.createbigcannons.cannon_control.contraption.PitchOrientedContr
 import rbasamoyai.createbigcannons.network.RootPacket;
 
 import java.util.concurrent.Executor;
-import java.util.function.Consumer;
 
 public class ClientboundCannonCmdSyncPacket implements RootPacket {
 

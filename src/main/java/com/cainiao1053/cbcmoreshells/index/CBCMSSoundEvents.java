@@ -38,6 +38,21 @@ public class CBCMSSoundEvents {
 			.category(SoundSource.BLOCKS)
 			.build();
 
+	public static final SoundEntry
+			DUAL_CANNON_1 = create("dual_cannon_1").subtitle("Dual Cannon 1")
+			.category(SoundSource.BLOCKS)
+			.build();
+
+	public static final SoundEntry
+			DUAL_CANNON_2 = create("dual_cannon_2").subtitle("Dual Cannon 2")
+			.category(SoundSource.BLOCKS)
+			.build();
+
+	public static final SoundEntry
+			DUAL_CANNON_3 = create("dual_cannon_3").subtitle("Dual Cannon 3")
+			.category(SoundSource.BLOCKS)
+			.build();
+
 
 	private static SoundEntryBuilder create(String id) {
 		return new CBCMSSoundEntryBuilder(Cbcmoreshells.resource(id));

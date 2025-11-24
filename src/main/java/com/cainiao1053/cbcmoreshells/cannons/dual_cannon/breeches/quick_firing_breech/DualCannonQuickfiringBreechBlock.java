@@ -6,6 +6,7 @@ import java.util.Set;
 import com.cainiao1053.cbcmoreshells.cannon_control.contraption.MountedDualCannonContraption;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBaseBlock;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBlock;
+import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBodyBlock;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.IDualCannonBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.dual_cannon_end.DualCannonEnd;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterial;
@@ -71,12 +72,32 @@ public class DualCannonQuickfiringBreechBlock extends DualCannonBaseBlock implem
 	private final VoxelShaper visualShapes;
 	private final VoxelShaper collisionShapes;
 
-	public DualCannonQuickfiringBreechBlock(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion
+	public DualCannonQuickfiringBreechBlock(Properties properties,DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion, VoxelShape base) {
+		this(properties, material, slidingConversion, base, base);
+	}
+
+	public DualCannonQuickfiringBreechBlock(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion, VoxelShape visualShape, VoxelShape collisionShape
 	) {
 		super(properties, material);
 		this.slidingConversion = slidingConversion;
-		this.visualShapes = new AllShapes.Builder(Block.box(0, 0, 3, 16, 16, 13)).forDirectional();
-		this.collisionShapes = new AllShapes.Builder(Block.box(0, 0, 3, 16, 16, 13)).forDirectional();
+		this.visualShapes = new AllShapes.Builder(visualShape).forDirectional();
+		this.collisionShapes = new AllShapes.Builder(collisionShape).forDirectional();
+	}
+
+	public static DualCannonQuickfiringBreechBlock medium(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
+		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(0, 0, 4, 16, 16, 12));
+	}
+
+	public static DualCannonQuickfiringBreechBlock wide(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
+		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(-5, 0, 3, 21, 16, 13));
+	}
+
+	public static DualCannonQuickfiringBreechBlock singleMedium(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
+		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(4, 0, 4, 12, 16, 12));
+	}
+
+	public static DualCannonQuickfiringBreechBlock singleWide(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
+		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(3, 0, 3, 13, 16, 13));
 	}
 
 	@Override

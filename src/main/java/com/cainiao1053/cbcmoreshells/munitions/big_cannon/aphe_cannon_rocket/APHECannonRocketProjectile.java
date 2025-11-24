@@ -1,7 +1,5 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon.aphe_cannon_rocket;
 
-import javax.annotation.Nonnull;
-
 import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
 import com.cainiao1053.cbcmoreshells.index.CBCMSMunitionPropertiesHandlers;
 import com.cainiao1053.cbcmoreshells.munitions.big_cannon.ShellessFuzedBigCannonProjectile;
@@ -19,6 +17,8 @@ import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonFuzeProp
 import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonProjectilePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
+
+import javax.annotation.Nonnull;
 
 public class APHECannonRocketProjectile extends ShellessFuzedBigCannonProjectile {
 

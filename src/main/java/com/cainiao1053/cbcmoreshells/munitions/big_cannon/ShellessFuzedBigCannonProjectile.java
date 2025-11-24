@@ -1,25 +1,23 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon;
 
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-
 import net.minecraft.core.Position;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.core.particles.ParticleTypes;
 import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.big_cannon.AbstractBigCannonProjectile;
 import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonFuzePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.fuzes.FuzeItem;
+
+import javax.annotation.Nonnull;
+import java.util.function.Predicate;
 
 public abstract class ShellessFuzedBigCannonProjectile extends AbstractBigCannonProjectile {
 

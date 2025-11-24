@@ -1,19 +1,8 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon;
 
-import javax.annotation.Nonnull;
-
-//import com.cainiao1053.cbcmoreshells.munitions.AbstractTorpedoProjectile;
-//import com.cainiao1053.cbcmoreshells.munitions.ProjectileContext;
 import com.cainiao1053.cbcmoreshells.munitions.big_cannon.config.TorpedoProjectilePropertiesComponent;
 import com.mojang.math.Constants;
-
-import com.simibubi.create.content.kinetics.fan.AirFlowParticleData;
-import net.minecraft.client.particle.BubbleParticle;
-import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -33,28 +22,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import rbasamoyai.createbigcannons.CBCClientCommon;
 import rbasamoyai.createbigcannons.CreateBigCannons;
 import rbasamoyai.createbigcannons.block_armor_properties.BlockArmorPropertiesHandler;
 import rbasamoyai.createbigcannons.block_armor_properties.BlockArmorPropertiesProvider;
 import rbasamoyai.createbigcannons.config.CBCCfgMunitions;
 import rbasamoyai.createbigcannons.config.CBCConfigs;
-import rbasamoyai.createbigcannons.effects.particles.smoke.TrailSmokeParticleData;
-import rbasamoyai.createbigcannons.effects.particles.splashes.SplashSprayParticleData;
 import rbasamoyai.createbigcannons.index.CBCDamageTypes;
-import rbasamoyai.createbigcannons.index.CBCSoundEvents;
-import rbasamoyai.createbigcannons.multiloader.EnvExecute;
 import rbasamoyai.createbigcannons.munitions.AbstractCannonProjectile;
 import rbasamoyai.createbigcannons.munitions.CannonDamageSource;
 import rbasamoyai.createbigcannons.munitions.ImpactExplosion;
 import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.big_cannon.ProjectileBlock;
-//import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonProjectilePropertiesComponent;
-import rbasamoyai.createbigcannons.munitions.config.DimensionMunitionPropertiesHandler;
-import rbasamoyai.createbigcannons.munitions.config.FluidDragHandler;
 import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
 import rbasamoyai.createbigcannons.network.ClientboundPlayBlockHitEffectPacket;
 import rbasamoyai.createbigcannons.utils.CBCUtils;
+
+import javax.annotation.Nonnull;
 
 public abstract class AbstractCannonTorpedoProjectile extends AbstractCannonProjectile {
 
@@ -78,27 +61,6 @@ public abstract class AbstractCannonTorpedoProjectile extends AbstractCannonProj
 		if (this.level().isClientSide || this.level().hasChunk(cpos.x, cpos.z)) {
 			Vec3 oldPos = this.position();
 			super.tick();
-//			if (!this.isInGround() && this.isInWater()) {
-//				ParticleOptions options = new SplashSprayParticleData(0.92f,0.97f,1f,0.2f,2,20);
-//					//ParticleOptions options = new AirFlowParticleData();
-//					for (int i = 0; i < 5; ++i) {
-//						double partial = i * 0.1f;
-//						double dx = Mth.lerp(partial, this.xOld, this.getX());
-//						double dy = Mth.lerp(partial, this.yOld, this.getY())+0.5;
-//						double dz = Mth.lerp(partial, this.zOld, this.getZ());
-//						double sx = this.level().random.nextDouble() * 0.004d - 0.002d;
-//						double sy = this.level().random.nextDouble() * 0.004d - 0.002d;
-//						double sz = this.level().random.nextDouble() * 0.004d - 0.002d;
-//						this.level().addAlwaysVisibleParticle(options, true, dx, dy, dz, sx, sy, sz);
-//					}
-//				Vec3 newPos = this.position();
-//				if (this.level().isClientSide && this.localSoundCooldown == 0) {
-//					Vec3 displacement = newPos.subtract(oldPos);
-//					double dispLen = displacement.length();
-//					Vec3 originPos = newPos.subtract(displacement.scale(0.5));
-//					double radius = Math.min(200, dispLen * 30);
-//				}
-//			}
 		}
 	}
 
@@ -113,32 +75,10 @@ public abstract class AbstractCannonTorpedoProjectile extends AbstractCannonProj
 
 	public ItemStack getTracer() { return this.entityData.get(TRACER); }
 
-
-
-	//Redo Start
-
-//	@Override
-//	protected Vec3 getForces(Vec3 position, Vec3 velocity) {
-//		Vec3 parentForces = Vec3.ZERO;
-//		double gravityForce = this.getGravity();
-//		double dampForce = this.getDragForce();
-//		return parentForces.add(0.0d, gravityForce - dampForce, 0.0d);
-//	}
-
 	@Override
 	protected Vec3 getForces(Vec3 position, Vec3 velocity) {
 		return velocity.normalize().scale(-this.getDragForce()).add((double)0.0F, this.getGravity(), (double)0.0F);
 	}
-
-//	@Override
-//	protected double getGravity() {
-//		FluidState fluidState = this.level().getFluidState(this.blockPosition());
-//		double gForce = this.getBallisticProperties().gravity();
-//		if (!fluidState.isEmpty()){
-//			gForce *= -getBuoyancyFactor();
-//		}
-//		return gForce;
-//	}
 
 	@Override
 	protected double getGravity() {
@@ -160,19 +100,6 @@ public abstract class AbstractCannonTorpedoProjectile extends AbstractCannonProj
 									Vec3 impactPos, BlockHitResult fluidHitResult){
 		return false;
     }
-
-//	@Override
-//	protected double getDragForce() {//rewrote to get vertical damping force
-//		BallisticPropertiesComponent properties = this.getBallisticProperties();
-//		double vel = this.getDeltaMovement().y;
-//		double formDrag = properties.drag();
-//		double drag = 0;
-//		FluidState fluidState = this.level().getFluidState(this.blockPosition());
-//		if (!fluidState.isEmpty())
-//			drag = Math.max(formDrag,0) * vel;
-//
-//		return drag;
-//	}
 
 	@Override
 	protected double getDragForce() {

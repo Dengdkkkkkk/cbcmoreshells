@@ -1,10 +1,10 @@
 package com.cainiao1053.cbcmoreshells.network;
 
-import java.util.function.Supplier;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import rbasamoyai.createbigcannons.network.RootPacket;
+
+import java.util.function.Supplier;
 
 public class CBCMSClientPacket {
 

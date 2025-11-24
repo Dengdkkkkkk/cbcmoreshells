@@ -1,13 +1,13 @@
 package com.cainiao1053.cbcmoreshells.network;
 
-import java.util.function.Function;
-
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.network.FriendlyByteBuf;
 import rbasamoyai.createbigcannons.network.RootPacket;
+
+import java.util.function.Function;
 
 public class CBCMSRootNetwork {
 

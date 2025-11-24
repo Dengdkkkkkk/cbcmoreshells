@@ -2,7 +2,6 @@ package com.cainiao1053.cbcmoreshells.munitions.big_cannon.long_range_shrapnel_t
 
 import com.cainiao1053.cbcmoreshells.CBCMSEntityTypes;
 import com.cainiao1053.cbcmoreshells.munitions.big_cannon.GeneralCannonTorpedoBlock;
-import com.cainiao1053.cbcmoreshells.munitions.big_cannon.ShellessShellBlock;
 import net.minecraft.world.entity.EntityType;
 import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
 

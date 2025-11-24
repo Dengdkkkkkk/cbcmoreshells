@@ -1,10 +1,6 @@
 package com.cainiao1053.cbcmoreshells.munitions.racked_projectile;
 
-import java.util.List;
-
-import com.cainiao1053.cbcmoreshells.index.CBCMSMunitionPropertiesHandlers;
 import com.simibubi.create.foundation.block.IBE;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -25,6 +21,8 @@ import net.minecraft.world.phys.Vec3;
 import rbasamoyai.createbigcannons.index.CBCItems;
 import rbasamoyai.createbigcannons.munitions.big_cannon.FuzedBlockEntity;
 import rbasamoyai.createbigcannons.munitions.fuzes.FuzeItem;
+
+import java.util.List;
 
 public abstract class FuzedRackedProjectileBlock<BLOCK_ENTITY extends FuzedBlockEntity, ENTITY extends FuzedRackedProjectile>
 	extends RackedProjectileBlock<ENTITY> implements IBE<BLOCK_ENTITY> {

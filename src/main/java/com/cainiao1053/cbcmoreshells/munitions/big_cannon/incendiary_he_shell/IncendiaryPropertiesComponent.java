@@ -1,11 +1,10 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon.incendiary_he_shell;
 
-import static rbasamoyai.createbigcannons.munitions.config.PropertiesTypeHandler.getOrWarn;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import net.minecraft.network.FriendlyByteBuf;
+
+import static rbasamoyai.createbigcannons.munitions.config.PropertiesTypeHandler.getOrWarn;
 
 public record IncendiaryPropertiesComponent(float explosivePower) {
 

@@ -2,6 +2,7 @@ package com.cainiao1053.cbcmoreshells.index;
 
 import com.cainiao1053.cbcmoreshells.munitions.autocannon.config.AntiairAutocannonProjectilePropertiesHandler;
 import com.cainiao1053.cbcmoreshells.munitions.big_cannon.config.*;
+import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonIncendiaryPropertiesHandler;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonProperties;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonPropertiesHandler;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.config.*;
@@ -19,6 +20,7 @@ public class CBCMSMunitionPropertiesHandlers {
 	public static final ShrapnelShellessShellPropertiesHandler SHRAPNEL_SHELLESS_BIG_CANNON_PROJECTILE = new ShrapnelShellessShellPropertiesHandler();
 	public static final RackedShrapnelProjectilePropertiesHandler RACKED_SHRAPNEL_PROJECTILE = new RackedShrapnelProjectilePropertiesHandler();
 	public static final DualCannonPropertiesHandler DUAL_CANNON_PROPERTIES = new DualCannonPropertiesHandler();
+	public static final DualCannonIncendiaryPropertiesHandler DUAL_CANNON_INCENDIARY_PROPERTIES = new DualCannonIncendiaryPropertiesHandler();
 
 	public static final AntiairAutocannonProjectilePropertiesHandler ANTIAIR_AUTOCANNON = new AntiairAutocannonProjectilePropertiesHandler();
 

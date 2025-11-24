@@ -1,9 +1,5 @@
 package com.cainiao1053.cbcmoreshells.munitions.dual_cannon;
 
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-
 import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
 import net.minecraft.core.Position;
 import net.minecraft.nbt.CompoundTag;
@@ -13,20 +9,18 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.core.particles.ParticleTypes;
 import org.slf4j.Logger;
 import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.big_cannon.config.BigCannonFuzePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.fuzes.FuzeItem;
-import rbasamoyai.createbigcannons.munitions.fuzes.TimedFuzeItem;
+
+import javax.annotation.Nonnull;
+import java.util.function.Predicate;
 
 public abstract class FuzedDualCannonProjectile extends AbstractDualCannonProjectile {
 

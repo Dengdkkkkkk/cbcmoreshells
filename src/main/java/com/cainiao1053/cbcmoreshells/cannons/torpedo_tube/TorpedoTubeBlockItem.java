@@ -12,8 +12,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import rbasamoyai.createbigcannons.base.CBCTooltip;
-//import rbasamoyai.createbigcannons.cannons.big_cannons.material.BigCannonMaterial;
 
 import javax.annotation.Nullable;
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon.inferior_he_shell;
 
 import com.cainiao1053.cbcmoreshells.CBCMSEntityTypes;
-import com.cainiao1053.cbcmoreshells.datagen.assets.CBCMSLangGen;
 import net.minecraft.world.entity.EntityType;
 import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
 import rbasamoyai.createbigcannons.munitions.big_cannon.SimpleShellBlock;

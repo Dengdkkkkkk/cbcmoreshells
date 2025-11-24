@@ -42,9 +42,11 @@ import com.cainiao1053.cbcmoreshells.munitions.big_cannon.CannonTorpedoProjectil
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.AbstractDualCannonProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.DualCannonProjectileRenderer;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.extended_ap_shot.ExtendedAPShotProjectile;
+import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_antiair_he_shell.NormalAntiairHEShellProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_ap_shell.NormalAPShellProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_ap_shot.NormalAPShotProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_he_shell.NormalHEShellProjectile;
+import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_incendiary_he_shell.NormalIncendiaryHEShellProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_sap_shell.NormalSAPShellProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.AbstractRackedProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.RackedProjectileRenderer;
@@ -134,6 +136,8 @@ public class CBCMSEntityTypes {
 	public static final EntityEntry<NormalSAPShellProjectile> NORMAL_SAP_SHELL = dualCannonProjectile("normal_sap_shell", NormalSAPShellProjectile::new, "Normal SAP Shell", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_PROPERTIES);
 	public static final EntityEntry<NormalAPShellProjectile> NORMAL_AP_SHELL = dualCannonProjectile("normal_ap_shell", NormalAPShellProjectile::new, "Normal AP Shell", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_PROPERTIES);
 	public static final EntityEntry<ExtendedAPShotProjectile> EXTENDED_AP_SHOT = dualCannonProjectile("extended_ap_shot", ExtendedAPShotProjectile::new, "Extended AP Shot", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_PROPERTIES);
+	public static final EntityEntry<NormalAntiairHEShellProjectile> NORMAL_ANTIAIR_HE_SHELL = dualCannonProjectile("normal_antiair_he_shell", NormalAntiairHEShellProjectile::new, "Normal Antiair HE Shell", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_PROPERTIES);
+	public static final EntityEntry<NormalIncendiaryHEShellProjectile> NORMAL_INCENDIARY_HE_SHELL = dualCannonProjectile("normal_incendiary_he_shell", NormalIncendiaryHEShellProjectile::new, "Normal HE Shell", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_INCENDIARY_PROPERTIES);
 
 
 	public static final EntityEntry<AntiairMachineGunProjectile> ANTIAIR_MACHINE_GUN_BULLET = autocannonProjectile("antiair_machine_gun_bullet", AntiairMachineGunProjectile::new, CBCMSMunitionPropertiesHandlers.ANTIAIR_AUTOCANNON);

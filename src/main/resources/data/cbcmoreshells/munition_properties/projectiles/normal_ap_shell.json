@@ -1,6 +1,6 @@
 {
   "entity_damage": 40.0,
-  "durability_mass": 5.5,
+  "durability_mass": 6,
   "renders_invulnerable": true,
   "ignores_invulnerability": true,
   "ignores_entity_armor": true,
@@ -17,7 +17,7 @@
   "toughness": 1,
   "deflection": 0.7,
   "base_fuze": false,
-  "explosive_power": 3.25,
+  "explosive_power": 3.5,
   "initial_vel": 8.0,
   "projectile_spread": 8,
   "minimum_spread": 0.4,

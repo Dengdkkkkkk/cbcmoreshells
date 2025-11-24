@@ -1,14 +1,6 @@
 package com.cainiao1053.cbcmoreshells;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
-import com.cainiao1053.cbcmoreshells.client.render.*;
-import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
+import com.cainiao1053.cbcmoreshells.client.render.DynamicOutliner;
 
 //@Mod.EventBusSubscriber(modid = Cbcmoreshells.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CbcmoreshellsClient {

@@ -1,9 +1,6 @@
 package com.cainiao1053.cbcmoreshells.munitions.big_cannon;
 
-import java.util.List;
-
 import com.simibubi.create.foundation.block.IBE;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +20,8 @@ import rbasamoyai.createbigcannons.munitions.big_cannon.AbstractBigCannonProject
 import rbasamoyai.createbigcannons.munitions.big_cannon.FuzedBlockEntity;
 import rbasamoyai.createbigcannons.munitions.big_cannon.ProjectileBlock;
 import rbasamoyai.createbigcannons.munitions.fuzes.FuzeItem;
+
+import java.util.List;
 
 public abstract class ShellessFuzedProjectileBlock<BLOCK_ENTITY extends FuzedBlockEntity, ENTITY extends ShellessFuzedBigCannonProjectile>
 	extends ProjectileBlock<ENTITY> implements IBE<BLOCK_ENTITY> {

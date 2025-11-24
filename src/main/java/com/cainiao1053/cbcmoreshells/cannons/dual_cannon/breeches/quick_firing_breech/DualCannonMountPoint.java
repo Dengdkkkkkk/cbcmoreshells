@@ -86,20 +86,9 @@ public class DualCannonMountPoint extends AllArmInteractionPointTypes.DepositOnl
 
 		if (munition instanceof DualCannonProjectileBlock) {
 			if (barrelLength == 0) return stack;
-//			if (firstInfo.state().getBlock() instanceof BigCartridgeBlock cartridge) {
-//				if (!simulate) {
-//					loadProjectile(stack, munition, poce, bigCannon);
-//
-//					breech.setLoadingCooldown(getLoadingCooldown(reloadTimeModifier));
-//				}
-//				if (BigCartridgeBlock.getPowerFromData(firstInfo) == 0) {
-//					if (simulate) stack.setCount(1);
-//					return cartridge.getExtractedItem(firstInfo);
-//				} else {
-//					return stack;
-//				}
-//			}
-			//if (!firstInfo.state().isAir()) return stack;
+			if (!firstInfo.state().isAir() && bigCannon.getCannonMaterial().properties().isSingleBarrel()) { //add cannon material property here to separate single and dual
+				return stack;
+			}
 			if (!simulate) {
 				loadCartridge(stack, munition, poce, bigCannon);
 				breech.setLoadingCooldown(getLoadingCooldown(reloadTimeModifier));
@@ -108,17 +97,6 @@ public class DualCannonMountPoint extends AllArmInteractionPointTypes.DepositOnl
 			copy.shrink(1);
 			return copy;
 		}
-//		if (munition instanceof BigCartridgeBlock) {
-//			if (BigCartridgeBlockItem.getPower(stack) == 0 || !(firstInfo.state().getBlock() instanceof DualCannonProjectileBlock))
-//				return stack;
-//			if (!simulate) {
-//				loadCartridge(stack, munition, poce, bigCannon);
-//				breech.setLoadingCooldown(getLoadingCooldown(reloadTimeModifier));
-//			}
-//			ItemStack copy = stack.copy();
-//			copy.shrink(1);
-//			return copy;
-//		}
 		return stack;
 	}
 

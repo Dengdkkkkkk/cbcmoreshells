@@ -24,6 +24,16 @@
     "cbcmoreshells:wide_rosequartz_brass_dual_cannon_barrel",
     "cbcmoreshells:wide_rosequartz_brass_dual_cannon_chamber",
     "cbcmoreshells:wide_nether_steel_dual_cannon_barrel",
-    "cbcmoreshells:wide_nether_steel_dual_cannon_chamber"
+    "cbcmoreshells:wide_nether_steel_dual_cannon_chamber",
+    "cbcmoreshells:steel_single_cannon_barrel",
+    "cbcmoreshells:steel_single_cannon_chamber",
+    "cbcmoreshells:wide_cast_iron_single_cannon_barrel",
+    "cbcmoreshells:wide_cast_iron_single_cannon_chamber",
+    "cbcmoreshells:wide_bronze_single_cannon_barrel",
+    "cbcmoreshells:wide_bronze_single_cannon_chamber",
+    "cbcmoreshells:wide_steel_single_cannon_barrel",
+    "cbcmoreshells:wide_steel_single_cannon_chamber",
+    "cbcmoreshells:wide_tough_steel_single_cannon_barrel",
+    "cbcmoreshells:wide_tough_steel_single_cannon_chamber"
   ]
 }

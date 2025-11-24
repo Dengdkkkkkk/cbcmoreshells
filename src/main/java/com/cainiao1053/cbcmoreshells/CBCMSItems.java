@@ -1,23 +1,20 @@
 package com.cainiao1053.cbcmoreshells;
 
-import static com.cainiao1053.cbcmoreshells.Cbcmoreshells.REGISTRATE;
 import com.cainiao1053.cbcmoreshells.datagen.assets.CBCMSBuilderTransformers;
-
 import com.cainiao1053.cbcmoreshells.munitions.autocannon.bullet.AntiairMachineGunRoundItem;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.combat_command.*;
+import com.cainiao1053.cbcmoreshells.munitions.fuzes.SensitiveImpactFuzeItem;
 import com.cainiao1053.cbcmoreshells.munitions.fuzes.ShipProximityFuzeItem;
-import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import rbasamoyai.createbigcannons.CBCTags;
-import rbasamoyai.createbigcannons.datagen.assets.CBCBuilderTransformers;
 import rbasamoyai.createbigcannons.utils.CBCRegistryUtils;
 import rbasamoyai.createbigcannons.utils.CBCUtils;
+
+import static com.cainiao1053.cbcmoreshells.Cbcmoreshells.REGISTRATE;
 
 public class CBCMSItems {
 
@@ -40,6 +37,10 @@ public class CBCMSItems {
 			.register();
 
 	public static final ItemEntry<ShipProximityFuzeItem> SHIP_PROXIMITY_FUZE = REGISTRATE.item("ship_proximity_fuze", ShipProximityFuzeItem::new)
+			.tag(CBCTags.CBCItemTags.FUZES)
+			.register();
+
+	public static final ItemEntry<SensitiveImpactFuzeItem> SENSITIVE_IMPACT_FUZE = REGISTRATE.item("sensitive_impact_fuze", SensitiveImpactFuzeItem::new)
 			.tag(CBCTags.CBCItemTags.FUZES)
 			.register();
 

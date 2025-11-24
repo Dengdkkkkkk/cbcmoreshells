@@ -2,14 +2,13 @@ package com.cainiao1053.cbcmoreshells.munitions.autocannon.config;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import rbasamoyai.createbigcannons.munitions.autocannon.config.AutocannonProjectilePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.EntityPropertiesTypeHandler;
 import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
-import rbasamoyai.createbigcannons.munitions.autocannon.config.AutocannonProjectilePropertiesComponent;
 
 public class AntiairAutocannonProjectilePropertiesHandler extends EntityPropertiesTypeHandler<AntiairAutocannonProjectileProperties> {
 

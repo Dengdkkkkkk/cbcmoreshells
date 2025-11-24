@@ -25,5 +25,32 @@
       }
     ],
     "subtitle": "cbcmoreshells.subtitle.servicebell"
+  },
+      "dual_cannon_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "cbcmoreshells:dual_cannon_1"
+      }
+    ],
+    "subtitle": "cbcmoreshells.subtitle.dual_cannon_1"
+  },
+      "dual_cannon_2": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "cbcmoreshells:dual_cannon_2"
+      }
+    ],
+    "subtitle": "cbcmoreshells.subtitle.dual_cannon_2"
+  },
+      "dual_cannon_3": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "cbcmoreshells:dual_cannon_3"
+      }
+    ],
+    "subtitle": "cbcmoreshells.subtitle.dual_cannon_3"
   }
 }

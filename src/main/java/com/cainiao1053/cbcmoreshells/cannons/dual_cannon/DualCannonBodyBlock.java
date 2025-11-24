@@ -1,16 +1,11 @@
 package com.cainiao1053.cbcmoreshells.cannons.dual_cannon;
 
-import java.util.function.Supplier;
-
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.dual_cannon_end.DualCannonEnd;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterial;
-import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.material.TorpedoTubeMaterial;
-import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.torpedo_end.TorpedoTubeEnd;
 import com.cainiao1053.cbcmoreshells.index.CBCMSBlockEntities;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.VoxelShaper;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -19,10 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-//import rbasamoyai.createbigcannons.cannons.big_cannons.cannon_end.BigCannonEnd;
-import rbasamoyai.createbigcannons.cannons.big_cannons.material.BigCannonMaterial;
 import rbasamoyai.createbigcannons.crafting.casting.CannonCastShape;
-import rbasamoyai.createbigcannons.index.CBCBlockEntities;
+
+import java.util.function.Supplier;
 
 public class DualCannonBodyBlock extends DualCannonBaseBlock implements IBE<DualCannonBlockEntity> {
 
@@ -45,16 +39,20 @@ public class DualCannonBodyBlock extends DualCannonBaseBlock implements IBE<Dual
 		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.VERY_SMALL, Block.box(0, 0, 5, 16, 16, 11));
 	}
 
-	public static DualCannonBodyBlock small(Properties properties, DualCannonMaterial material) {
-		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.SMALL, Block.box(1, 0, 1, 15, 16, 15));
+	public static DualCannonBodyBlock singleSmall(Properties properties, DualCannonMaterial material) {
+		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.SMALL, Block.box(5, 0, 5, 11, 16, 11));
+	}
+
+	public static DualCannonBodyBlock singleMedium(Properties properties, DualCannonMaterial material) {
+		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.SMALL, Block.box(4, 0, 4, 12, 16, 12));
 	}
 
 	public static DualCannonBodyBlock medium(Properties properties, DualCannonMaterial material) {
 		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.MEDIUM, Block.box(0, 0, 4, 16, 16, 12));
 	}
 
-	public static DualCannonBodyBlock large(Properties properties, DualCannonMaterial material) {
-		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.LARGE, Block.box(-1, 0, -1, 17, 16, 17), Shapes.block());
+	public static DualCannonBodyBlock wide(Properties properties, DualCannonMaterial material) {
+		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.MEDIUM, Block.box(-4, 0, 4, 20, 16, 12));
 	}
 
 	public static DualCannonBodyBlock veryLarge(Properties properties, DualCannonMaterial material) {

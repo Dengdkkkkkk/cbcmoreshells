@@ -1,17 +1,13 @@
 package com.cainiao1053.cbcmoreshells.network;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Executor;
-
-import javax.annotation.Nullable;
-
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import rbasamoyai.createbigcannons.multiloader.EnvExecute;
 import rbasamoyai.createbigcannons.network.RootPacket;
+
+import javax.annotation.Nullable;
+import java.util.concurrent.Executor;
 
 public record ClientboundCBCMSSplashPacket(double x, double y, double z, double xOld, double yOld, double zOld) implements RootPacket {
 

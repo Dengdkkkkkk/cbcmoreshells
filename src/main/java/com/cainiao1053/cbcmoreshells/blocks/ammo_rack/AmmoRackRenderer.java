@@ -2,29 +2,20 @@ package com.cainiao1053.cbcmoreshells.blocks.ammo_rack;
 
 import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.simibubi.create.foundation.item.SmartInventory;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 import org.slf4j.Logger;
 
 
@@ -42,34 +33,6 @@ public class AmmoRackRenderer extends SmartBlockEntityRenderer<AmmoRackBlockEnti
         //ItemStack stack = inventory.getItem(0);
         Direction facing = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         float yaw = AngleHelper.horizontalAngle(facing);
-        //float pitch = getClockWise(facing);
-//        if(stack.isEmpty()) {
-//            return;
-//        }
-        //Vec3 translation = new Vec3(-0.3f,0.25f,0.3f);
-        //translation = rotateYaw(translation, yaw);
-//        ms.pushPose();
-//        ms.translate(0.5, 0.5, 0.5);
-//        ms.mulPose(Axis.YP.rotationDegrees(yaw));
-//
-//        ms.translate(translation.x, translation.y, translation.z);
-//        ms.mulPose(Axis.XP.rotationDegrees(-90));
-//
-//        ms.scale(0.75f, 0.75f, 0.75f);
-//        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-//        int packedLight = LevelRenderer.getLightColor(blockEntity.getLevel(),
-//                blockEntity.getBlockPos());
-//
-//        itemRenderer.renderStatic(stack,
-//                ItemDisplayContext.FIXED,
-//                packedLight,
-//                overlay,
-//                ms,
-//                buffer,
-//                blockEntity.getLevel(),
-//                0);
-//
-//        ms.popPose();
 
         for(int i = 1; i<4; i++){
             for(int j = 1; j<3; j++){

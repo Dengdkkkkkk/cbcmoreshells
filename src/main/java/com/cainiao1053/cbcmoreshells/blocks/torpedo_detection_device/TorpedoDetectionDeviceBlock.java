@@ -2,10 +2,7 @@ package com.cainiao1053.cbcmoreshells.blocks.torpedo_detection_device;
 
 import com.cainiao1053.cbcmoreshells.index.CBCMSBlockEntities;
 import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
-import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
-import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.foundation.block.IBE;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;

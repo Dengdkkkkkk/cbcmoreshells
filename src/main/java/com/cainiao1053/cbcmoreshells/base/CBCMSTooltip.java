@@ -1,39 +1,27 @@
 package com.cainiao1053.cbcmoreshells.base;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBlock;
-import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.DualCannonBreechStrengthHandler;
-import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.dual_cannon_end.DualCannonEnd;
-import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterial;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterialProperties;
-import com.cainiao1053.cbcmoreshells.index.CBCMSDualCannonMaterials;
+import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonIncendiaryProperties;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonProperties;
-import com.simibubi.create.content.equipment.goggles.GogglesItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import rbasamoyai.createbigcannons.utils.CBCUtils;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class CBCMSTooltip {
 
@@ -64,6 +52,46 @@ public class CBCMSTooltip {
 		DualCannonMaterialProperties material = block.getCannonMaterial().properties();
 		String rootKey = "block." + Cbcmoreshells.MODID + ".dual_cannon.tooltip";
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".info"),
+				palette.primary(), palette.highlight(), 2));
+		tooltip.add(Components.literal(I18n.get(rootKey + ".materialProperties")).withStyle(ChatFormatting.GRAY));
+
+		tooltip.add(Components.literal(" " + I18n.get(rootKey + ".accuracy")).withStyle(ChatFormatting.GRAY));
+		float spread = material.minimumSpread();
+		float spreadReduction = material.spreadReductionPerBarrel();
+
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".accuracy.info", spreadReduction, spread),
+				palette.primary(), palette.highlight(), 2));
+
+		tooltip.add(Components.literal(" " + I18n.get(rootKey + ".damageMultiplier")).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".damageMultiplier.info", material.durabilityMassModifier()),
+				palette.primary(), palette.highlight(), 2));
+
+		tooltip.add(Components.literal(" " + I18n.get(rootKey + ".addedLifetime")).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".addedLifetime.info", String.format("%.1f",(float) material.addedLifetime()/20)),
+				palette.primary(), palette.highlight(), 2));
+
+		tooltip.add(Components.literal(" " + I18n.get(rootKey + ".reloadTime")).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".reloadTime.info", String.format("%.1f",material.reloadTimeModifier()*2.5)),
+				palette.primary(), palette.highlight(), 2));
+
+		tooltip.add(Components.literal(" " + I18n.get(rootKey + ".combatCommand")).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".combatCommand.info", String.format("%.0f",(float)material.combatCommandDuration()/20),String.format("%.0f",(float)material.combatCommandCooldown()/20)),
+				palette.primary(), palette.highlight(), 2));
+	}
+
+	public static <T extends Block & DualCannonBlock> void appendSingleCannonBlockText(ItemStack stack, @Nullable Level level,
+																					 List<Component> tooltip, TooltipFlag flag, T block) {
+		boolean desc = Screen.hasShiftDown();
+		addHoldShift(desc, tooltip);
+		if (!desc) {
+			return;
+		}
+
+		TooltipHelper.Palette palette = getPalette(level, stack);
+		DualCannonMaterialProperties material = block.getCannonMaterial().properties();
+		String rootKey = "block." + Cbcmoreshells.MODID + ".dual_cannon.tooltip";
+		String singleKey = "block." + Cbcmoreshells.MODID + ".single_cannon.tooltip";
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(singleKey + ".info"),
 				palette.primary(), palette.highlight(), 2));
 		tooltip.add(Components.literal(I18n.get(rootKey + ".materialProperties")).withStyle(ChatFormatting.GRAY));
 
@@ -214,11 +242,26 @@ public class CBCMSTooltip {
 
 	public static void appendProxyFuzeInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip,
 										  TooltipFlag flag) {
-		if (!Screen.hasShiftDown()) {
+		boolean desc = Screen.hasShiftDown();
+		addHoldShift(desc, tooltip);
+		if (!desc) {
 			return;
 		}
 		TooltipHelper.Palette palette = getPalette(level, stack);
 		String key1 = "item.cbcmoreshells.ship_proximity_fuze.tooltip";
+		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main"), palette.primary(), palette.highlight(), 1));
+	}
+
+	public static void appendSensitiveFuzeInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip,
+										   TooltipFlag flag) {
+		boolean desc = Screen.hasShiftDown();
+		addHoldShift(desc, tooltip);
+		if (!desc) {
+			return;
+		}
+		TooltipHelper.Palette palette = getPalette(level, stack);
+		String key1 = "item.cbcmoreshells.sensitive_impact_fuze.tooltip";
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main"), palette.primary(), palette.highlight(), 1));
 	}
@@ -371,6 +414,32 @@ public class CBCMSTooltip {
 		String key1 = stack.getDescriptionId();
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main", durabilityMass, explosion, String.format("%.0f",initVel*20), projectileSpread, minimumSpread,
+				String.format("%.1f",(float)lifetime/20),String.format("%.0f",Math.acos(deflection)*180/Math.PI), smashToughness,
+				maximumMomentum), palette.primary(), palette.highlight(), 1));
+	}
+
+	public static void appendIncendiaryDualCannonProjectileInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip,
+															   TooltipFlag flag, DualCannonIncendiaryProperties properties) {
+		if (!Screen.hasShiftDown()) {
+			return;
+		}
+		float durabilityMass = properties.ballistics().durabilityMass();
+		float explosion = properties.explosion().explosivePower();
+		float initVel = properties.dualCannonProperties().initialVel();
+		float projectileSpread = properties.dualCannonProperties().projectileSpread();
+		float minimumSpread = properties.dualCannonProperties().minimumSpread();
+		int lifetime = properties.dualCannonProperties().lifetime();
+		float deflection = properties.ballistics().deflection();
+		float smashToughness = properties.dualCannonProperties().smashToughness();
+		float maximumMomentum = properties.dualCannonProperties().maximumMomentum();
+		float fireChance = properties.incendiary().fireChance();
+		int fireRange = properties.incendiary().fireRange();
+		TooltipHelper.Palette palette = getPalette(level, stack);
+		String key1 = stack.getDescriptionId();
+		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main", durabilityMass, explosion,
+				String.format("%.0f",fireChance*100), fireRange,
+				String.format("%.0f",initVel*20), projectileSpread, minimumSpread,
 				String.format("%.1f",(float)lifetime/20),String.format("%.0f",Math.acos(deflection)*180/Math.PI), smashToughness,
 				maximumMomentum), palette.primary(), palette.highlight(), 1));
 	}

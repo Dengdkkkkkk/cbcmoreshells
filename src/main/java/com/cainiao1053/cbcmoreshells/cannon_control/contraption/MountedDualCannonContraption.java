@@ -22,6 +22,7 @@ import com.cainiao1053.cbcmoreshells.index.CBCMSContraptionTypes;
 import com.cainiao1053.cbcmoreshells.cannon_control.cannon_types.CBCMSCannonContraptionTypes;
 
 import com.cainiao1053.cbcmoreshells.index.CBCMSDualCannonMaterials;
+import com.cainiao1053.cbcmoreshells.index.CBCMSSoundEvents;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.AbstractDualCannonProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.DualCannonProjectileBlock;
 import com.cainiao1053.cbcmoreshells.network.CBCMSNetworkImpl;
@@ -41,6 +42,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -460,7 +462,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			recoilMagnitude += projectile.addedRecoil();
 		}
 
-		if (secondary_projectile != null) {
+		if (secondary_projectile != null && !cannonMaterial.properties().isSingleBarrel()) {
 			if (secondary_projectile instanceof IntegratedPropellantProjectile integPropel && !projectileBlocks.isEmpty()) {
 				if (!propelCtx.addIntegratedPropellant(integPropel, projectileBlocks.get(0), this.initialOrientation) && canFail) {
 					this.fail(currentPos, level, entity, null, (int) propelCtx.chargesUsed);
@@ -500,7 +502,8 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 
 		float soundPower = Mth.clamp(1 / 16f, 0, 1);
 		float tone = 2 + soundPower * -8 + level.random.nextFloat() * 4f - 2f;
-		float pitch = 1.5f;
+		//float pitch = Math.min(1.5f/((this.cannonMaterial.properties().durabilityMassModifier()-1)/1.6f+1),2);
+		float pitch = 1;
 		double shakeDistance = propelCtx.chargesUsed * CBCConfigs.SERVER.cannons.bigCannonBlastDistanceMultiplier.getF();
 		float volume = 14;
 		Vec3 plumePos = spawnPos.subtract(vec);
@@ -508,7 +511,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 
 		BigCannonPlumeParticleData plumeParticle = new BigCannonPlumeParticleData(0.5f, 4, 10);
 		CannonBlastWaveEffectParticleData blastEffect = new CannonBlastWaveEffectParticleData(shakeDistance,
-			BuiltInRegistries.SOUND_EVENT.wrapAsHolder(CBCSoundEvents.FIRE_BIG_CANNON.getMainEvent()), SoundSource.BLOCKS,
+			BuiltInRegistries.SOUND_EVENT.wrapAsHolder(getSound(this.cannonMaterial.properties().durabilityMassModifier())), SoundSource.BLOCKS,
 			volume, pitch, 2, 0);
 		Packet<?> blastWavePacket = new ClientboundLevelParticlesPacket(blastEffect, true, plumePos.x, plumePos.y, plumePos.z, 0, 0, 0, 1, 0);
 
@@ -529,6 +532,15 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			ChunkPos cpos2 = new ChunkPos(BlockPos.containing(secondary_projectile.position()));
 			RitchiesProjectileLib.queueForceLoad(level, cpos2.x, cpos2.z);
 		}
+	}
+
+	private SoundEvent getSound(float durabilityMultiplier) {
+		if(durabilityMultiplier<0.95){
+			return CBCMSSoundEvents.DUAL_CANNON_1.getMainEvent();
+		}else if(durabilityMultiplier<1.5){
+			return CBCMSSoundEvents.DUAL_CANNON_2.getMainEvent();
+		}
+		return CBCMSSoundEvents.DUAL_CANNON_3.getMainEvent();
 	}
 
 

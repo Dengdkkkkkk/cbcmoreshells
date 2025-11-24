@@ -13,11 +13,11 @@
   "can_squib": true,
   "added_recoil": 1.0,
   "base_fuze": false,
-  "explosive_power": 6.5,
+  "explosive_power": 7.5,
   "max_charges": 16,
   "penetration": 1.5,
   "lifetime": 140,
-  "fire_chance": 0.15,
+  "fire_chance": 0.30,
   "fire_range": 7,
   "toughness": 1,
   "deflection": 0.0

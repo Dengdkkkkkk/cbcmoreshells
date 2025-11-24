@@ -1,25 +1,17 @@
 package com.cainiao1053.cbcmoreshells.datagen.assets;
 
 
-import static com.cainiao1053.cbcmoreshells.Cbcmoreshells.REGISTRATE;
-
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.stream.Collectors;
-
 import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
-import org.apache.commons.lang3.StringUtils;
-
-import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
-
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import rbasamoyai.createbigcannons.CBCTags;
-import rbasamoyai.createbigcannons.utils.CBCUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static com.cainiao1053.cbcmoreshells.Cbcmoreshells.REGISTRATE;
 
 public class CBCMSLangGen {
 
