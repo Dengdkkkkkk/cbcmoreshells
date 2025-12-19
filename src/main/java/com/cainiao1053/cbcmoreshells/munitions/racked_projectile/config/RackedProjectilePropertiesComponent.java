@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
-public record RackedProjectilePropertiesComponent(float addedChargePower, float minimumChargePower, boolean canSquib, float addedRecoil, float initialVel, float projectileSpread) {
+public record RackedProjectilePropertiesComponent(float addedChargePower, float minimumChargePower, boolean canSquib, float addedRecoil, float initialVel, float projectileSpread, int reloadTime) {
 
-	public static final RackedProjectilePropertiesComponent DEFAULT = new RackedProjectilePropertiesComponent(0, 0, false, 0, 0, 1);
+	public static final RackedProjectilePropertiesComponent DEFAULT = new RackedProjectilePropertiesComponent(0, 0, false, 0, 0, 1, 160);
 
 	public static RackedProjectilePropertiesComponent fromJson(String id, JsonObject obj) {
 		float addedChargePower = Math.max(0, GsonHelper.getAsFloat(obj, "added_charge_power", 0));
@@ -16,11 +16,12 @@ public record RackedProjectilePropertiesComponent(float addedChargePower, float 
 		float addedRecoil = Math.max(0, GsonHelper.getAsFloat(obj, "added_recoil", 1));;
 		float initialVel = Math.max(0, GsonHelper.getAsFloat(obj, "initial_vel", 0.5f));
 		float projectileSpread = Math.max(0, GsonHelper.getAsFloat(obj, "projectile_spread", 0.5f));
-		return new RackedProjectilePropertiesComponent(addedChargePower, minimumChargePower, canSquib, addedRecoil, initialVel, projectileSpread);
+		int reloadTime = Math.max(1, GsonHelper.getAsInt(obj, "reload_time", 160));
+		return new RackedProjectilePropertiesComponent(addedChargePower, minimumChargePower, canSquib, addedRecoil, initialVel, projectileSpread, reloadTime);
 	}
 
 	public static RackedProjectilePropertiesComponent fromNetwork(FriendlyByteBuf buf) {
-		return new RackedProjectilePropertiesComponent(buf.readFloat(), buf.readFloat(), buf.readBoolean(), buf.readFloat(), buf.readFloat(), buf.readFloat());
+		return new RackedProjectilePropertiesComponent(buf.readFloat(), buf.readFloat(), buf.readBoolean(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readInt());
 	}
 
 	public void toNetwork(FriendlyByteBuf buf) {
@@ -29,7 +30,8 @@ public record RackedProjectilePropertiesComponent(float addedChargePower, float 
 			.writeBoolean(this.canSquib)
 			.writeFloat(this.addedRecoil)
 			.writeFloat(this.initialVel)
-		    .writeFloat(this.projectileSpread);
+		    .writeFloat(this.projectileSpread)
+			.writeInt(this.reloadTime);
 	}
 
 }

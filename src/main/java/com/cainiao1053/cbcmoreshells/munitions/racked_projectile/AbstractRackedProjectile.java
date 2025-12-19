@@ -298,6 +298,7 @@ public abstract class AbstractRackedProjectile extends AbstractCannonProjectile 
 	public float addedRecoil() { return this.getRackedProjectileProperties().addedRecoil(); }
 	public float initialVelocity(){return this.getRackedProjectileProperties().initialVel();}
 	public float projectileSpread(){return this.getRackedProjectileProperties().projectileSpread();}
+	public int getReloadTime(){return this.getRackedProjectileProperties().reloadTime();}
 
 	@Nonnull protected abstract RackedProjectilePropertiesComponent getRackedProjectileProperties();
 

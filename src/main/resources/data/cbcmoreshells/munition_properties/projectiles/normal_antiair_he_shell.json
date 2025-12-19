@@ -23,5 +23,6 @@
   "minimum_spread": 1.1,
   "smash_toughness": 0,
   "explosion_cooldown": 10,
-  "maximum_momentum": 10
+  "maximum_momentum": 10,
+  "reload_time_coef": 1
 }

@@ -67,6 +67,49 @@ public class DualCannonMountPoint extends AllArmInteractionPointTypes.DepositOnl
 		Direction extractDirection = pushDirection.getOpposite();
 		BlockPos startPos = bigCannon.getStartPos();
 		BlockPos breechPos = startPos.relative(extractDirection);
+		if (!(bigCannon.presentBlockEntities.get(breechPos) instanceof DualCannonQuickfiringBreechBlockEntity breech) || !breech.canBeAutomaticallyLoaded())
+			return stack;
+
+		BlockPos nextPos = startPos.relative(pushDirection);
+		int barrelLength = 0;
+		while (bigCannon.presentBlockEntities.get(nextPos) instanceof IDualCannonBlockEntity cbe2) {
+			StructureBlockInfo info = cbe2.cannonBehavior().block();
+			if (!info.state().isAir()) return stack;
+			nextPos = nextPos.relative(pushDirection);
+			++barrelLength;
+		}
+
+		BlockEntity be1 = bigCannon.presentBlockEntities.get(startPos);
+		if (!(be1 instanceof IDualCannonBlockEntity cbe1)) return stack;
+		StructureBlockInfo firstInfo = cbe1.cannonBehavior().block();
+
+		if (munition instanceof DualCannonProjectileBlock) {
+			if (barrelLength == 0) return stack;
+			if (!firstInfo.state().isAir() && bigCannon.getCannonMaterial().properties().isSingleBarrel()) { //add cannon material property here to separate single and dual
+				return stack;
+			}
+			if (!simulate) {
+				loadCartridge(stack, munition, poce, bigCannon);
+				float reloadTimeModifier = bigCannon.getReloadTimeModifier();
+				float reloadTimeCoef = ((DualCannonProjectileBlock<?>) munition).getProjectile(poce.level(), stack).getReloadTimeCoef();
+				breech.setLoadingCooldown(getLoadingCooldown(reloadTimeModifier*reloadTimeCoef));
+			}
+			ItemStack copy = stack.copy();
+			copy.shrink(1);
+			return copy;
+		}
+		return stack;
+	}
+
+	public static ItemStack dualCannonInsertCustomized(ItemStack stack, boolean simulate, MountedDualCannonContraption bigCannon,
+											 PitchOrientedContraptionEntity poce) {
+		if (!(stack.getItem() instanceof BlockItem blockItem) || !(blockItem.getBlock() instanceof BigCannonMunitionBlock munition))
+			return stack;
+
+		Direction pushDirection = bigCannon.initialOrientation();
+		Direction extractDirection = pushDirection.getOpposite();
+		BlockPos startPos = bigCannon.getStartPos();
+		BlockPos breechPos = startPos.relative(extractDirection);
 		float reloadTimeModifier = bigCannon.getReloadTimeModifier();
 		if (!(bigCannon.presentBlockEntities.get(breechPos) instanceof DualCannonQuickfiringBreechBlockEntity breech) || !breech.canBeAutomaticallyLoaded())
 			return stack;
@@ -91,7 +134,7 @@ public class DualCannonMountPoint extends AllArmInteractionPointTypes.DepositOnl
 			}
 			if (!simulate) {
 				loadCartridge(stack, munition, poce, bigCannon);
-				breech.setLoadingCooldown(getLoadingCooldown(reloadTimeModifier));
+				//breech.setLoadingCooldown(getLoadingCooldown(reloadTimeModifier));
 			}
 			ItemStack copy = stack.copy();
 			copy.shrink(1);

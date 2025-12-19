@@ -52,12 +52,14 @@ import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.AbstractRackedP
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.RackedProjectileRenderer;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.aphe_bomb.APHEBombProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.aphe_bouncing_bomb.APHEBouncingBombProjectile;
+import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.aphe_loitering_rocket.APHELoiteringRocketProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.aphe_rocket.APHERocketProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.depth_charge.DepthChargeProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.dual_aphe_rocket.DualAPHERocketProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.dual_he_rocket.DualHERocketProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.he_bomb.HEBombProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.he_bouncing_bomb.HEBouncingBombProjectile;
+import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.he_loitering_rocket.HELoiteringRocketProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.he_rocket.HERocketProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.racked_torpedo.RackedTorpedoProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.torpedo_tube.medium_range_torpedo.MediumRangeTorpedoProjectile;
@@ -130,6 +132,8 @@ public class CBCMSEntityTypes {
 	public static final EntityEntry<DualHERocketProjectile> DUAL_HE_ROCKET = rackedProjectile("dual_he_rocket", DualHERocketProjectile::new, "Dual HE Rocket", CBCMSMunitionPropertiesHandlers.RACKED_ROCKET);
 	public static final EntityEntry<DualAPHERocketProjectile> DUAL_APHE_ROCKET = rackedProjectile("dual_aphe_rocket", DualAPHERocketProjectile::new, "Dual APHE Rocket", CBCMSMunitionPropertiesHandlers.RACKED_ROCKET);
 	public static final EntityEntry<DepthChargeProjectile> DEPTH_CHARGE = rackedProjectile("depth_charge", DepthChargeProjectile::new, "Depth Charge", CBCMSMunitionPropertiesHandlers.RACKED_SHRAPNEL_PROJECTILE);
+	public static final EntityEntry<HELoiteringRocketProjectile> HE_LOITERING_ROCKET = rackedProjectile("beef_noodle", HELoiteringRocketProjectile::new, "HE Rocket", CBCMSMunitionPropertiesHandlers.LOITERING_ROCKET);
+	public static final EntityEntry<APHELoiteringRocketProjectile> APHE_LOITERING_ROCKET = rackedProjectile("bubble_drink", APHELoiteringRocketProjectile::new, "APHE Rocket", CBCMSMunitionPropertiesHandlers.LOITERING_ROCKET);
 
 	public static final EntityEntry<NormalAPShotProjectile> NORMAL_AP_SHOT = dualCannonProjectile("normal_ap_shot", NormalAPShotProjectile::new, "Normal AP Shot", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_PROPERTIES);
 	public static final EntityEntry<NormalHEShellProjectile> NORMAL_HE_SHELL = dualCannonProjectile("normal_he_shell", NormalHEShellProjectile::new, "Normal HE Shell", CBCMSMunitionPropertiesHandlers.DUAL_CANNON_PROPERTIES);

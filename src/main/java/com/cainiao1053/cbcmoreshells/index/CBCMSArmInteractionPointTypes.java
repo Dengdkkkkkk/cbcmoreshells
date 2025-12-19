@@ -40,14 +40,6 @@ public class CBCMSArmInteractionPointTypes {
 
 		@Override
 		public boolean canCreatePoint(Level level, BlockPos pos, BlockState state) {
-//			if (CBCBlocks.CANNON_MOUNT.has(state))
-//				return level.getBlockEntity(pos) instanceof CannonMountBlockEntity;
-//			if (CBCBlocks.FIXED_CANNON_MOUNT.has(state))
-//				return level.getBlockEntity(pos) instanceof FixedCannonMountBlockEntity;
-//			if (CBCBlocks.CANNON_MOUNT_EXTENSION.has(state))
-//				return level.getBlockEntity(pos) instanceof CannonMountExtensionBlockEntity;
-//			if (CBCBlocks.YAW_CONTROLLER.has(state))
-//				return level.getBlockEntity(pos) instanceof YawControllerBlockEntity;
 			if (CBCMSBlocks.AMMO_RACK.has(state)) {
 				return level.getBlockEntity(pos) instanceof AmmoRackBlockEntity;
 			}

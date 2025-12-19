@@ -21,6 +21,7 @@
   "initial_vel": 2.0,
   "projectile_spread": 1.2,
   "explosion_cooldown": 12,
-  "steady_state_vel": 4.5,
-  "thrust_time": 60
+  "steady_state_vel": 7,
+  "thrust_time": 60,
+  "reload_time": 180
 }

@@ -1,6 +1,6 @@
 {
   "entity_damage": 120.0,
-  "durability_mass": 5.5,
+  "durability_mass": 7.5,
   "renders_invulnerable": true,
   "ignores_invulnerability": true,
   "ignores_entity_armor": true,

@@ -3,8 +3,6 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"0": "#side",
-		"1": "#front",
 		"particle": "#side"
 	},
 	"elements": [
@@ -13,12 +11,12 @@
 			"to": [11, 11, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [5, 9, -2]},
 			"faces": {
-				"north": {"uv": [5, 5, 11, 11], "texture": "#1"},
-				"east": {"uv": [9, 0, 15, 16], "rotation": 90, "texture": "#0"},
-				"south": {"uv": [5, 5, 11, 11], "texture": "#1"},
-				"west": {"uv": [9, 0, 15, 16], "rotation": 270, "texture": "#0"},
-				"up": {"uv": [9, 0, 15, 16], "texture": "#0"},
-				"down": {"uv": [9, 0, 15, 16], "texture": "#0"}
+				"north": {"uv": [5, 5, 11, 11], "texture": "#front"},
+				"east": {"uv": [9, 0, 15, 16], "rotation": 90, "texture": "#side"},
+				"south": {"uv": [5, 5, 11, 11], "texture": "#front"},
+				"west": {"uv": [9, 0, 15, 16], "rotation": 270, "texture": "#side"},
+				"up": {"uv": [15, 0, 9, 16], "texture": "#side"},
+				"down": {"uv": [15, 0, 9, 16], "rotation": 180, "texture": "#side"}
 			}
 		}
 	],

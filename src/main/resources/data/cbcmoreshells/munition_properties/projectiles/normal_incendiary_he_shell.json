@@ -25,5 +25,6 @@
   "explosion_cooldown": 10,
   "maximum_momentum": 10,
   "fire_chance": 0.12,
-  "fire_range": 3
+  "fire_range": 3,
+  "reload_time_coef": 1
 }

@@ -354,6 +354,7 @@ public abstract class AbstractDualCannonProjectile extends AbstractCannonProject
 	public float getSmashToughness(){return this.getDualCannonProjectileProperties().smashToughness();}
 	public float getMaximumMomentum(){return this.getDualCannonProjectileProperties().maximumMomentum();}
 	public float getMaximumMass(){return this.getBallisticProperties().durabilityMass();}
+	public float getReloadTimeCoef(){return this.getDualCannonProjectileProperties().reloadTimeCoef();}
 
 	public void setLifetime(int lifetime){
 		this.maxAge = lifetime;

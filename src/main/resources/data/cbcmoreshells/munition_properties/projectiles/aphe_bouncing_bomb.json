@@ -20,5 +20,6 @@
   "deflection": 0.86,
   "initial_vel": 0.2,
   "projectile_spread": 1,
-  "explosion_cooldown": 15
+  "explosion_cooldown": 15,
+  "reload_time": 180
 }

@@ -2,6 +2,7 @@ package com.cainiao1053.cbcmoreshells.base;
 
 import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBlock;
+import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.equipments.DualCannonChargerAttachment;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterialProperties;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonIncendiaryProperties;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.config.DualCannonProperties;
@@ -116,6 +117,21 @@ public class CBCMSTooltip {
 
 		tooltip.add(Components.literal(" " + I18n.get(rootKey + ".combatCommand")).withStyle(ChatFormatting.GRAY));
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".combatCommand.info", String.format("%.0f",(float)material.combatCommandDuration()/20),String.format("%.0f",(float)material.combatCommandCooldown()/20)),
+				palette.primary(), palette.highlight(), 2));
+	}
+
+	public static <T extends Block & DualCannonBlock> void appendDualCannonChargerBlockText(ItemStack stack, @Nullable Level level,
+																							List<Component> tooltip, TooltipFlag flag, T block) {
+		boolean desc = Screen.hasShiftDown();
+		addHoldShift(desc, tooltip);
+		if (!desc) {
+			return;
+		}
+
+		TooltipHelper.Palette palette = getPalette(level, stack);
+		String rootKey = "block." + Cbcmoreshells.MODID + ".dual_cannon.tooltip.charger";
+		tooltip.add(Components.translatable(rootKey).withStyle(ChatFormatting.GRAY));
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(rootKey + ".info"),
 				palette.primary(), palette.highlight(), 2));
 	}
 
@@ -388,12 +404,13 @@ public class CBCMSTooltip {
 		float deflection = properties.ballistics().deflection();
 		float smashToughness = properties.dualCannonProperties().smashToughness();
 		float maximumMomentum = properties.dualCannonProperties().maximumMomentum();
+		float reloadTimeCoef = properties.dualCannonProperties().reloadTimeCoef();
 		TooltipHelper.Palette palette = getPalette(level, stack);
 		String key1 = stack.getDescriptionId();
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main", durabilityMass, initVel, projectileSpread, minimumSpread,
 				String.format("%.1f",(float)lifetime/20),String.format("%.0f",Math.acos(deflection)*180/Math.PI), smashToughness,
-				maximumMomentum), palette.primary(), palette.highlight(), 1));
+				maximumMomentum, reloadTimeCoef), palette.primary(), palette.highlight(), 1));
 	}
 
 	public static void appendExplosiveDualCannonProjectileInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip,
@@ -410,12 +427,13 @@ public class CBCMSTooltip {
 		float deflection = properties.ballistics().deflection();
 		float smashToughness = properties.dualCannonProperties().smashToughness();
 		float maximumMomentum = properties.dualCannonProperties().maximumMomentum();
+		float reloadTimeCoef = properties.dualCannonProperties().reloadTimeCoef();
 		TooltipHelper.Palette palette = getPalette(level, stack);
 		String key1 = stack.getDescriptionId();
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main", durabilityMass, explosion, String.format("%.0f",initVel*20), projectileSpread, minimumSpread,
 				String.format("%.1f",(float)lifetime/20),String.format("%.0f",Math.acos(deflection)*180/Math.PI), smashToughness,
-				maximumMomentum), palette.primary(), palette.highlight(), 1));
+				maximumMomentum, reloadTimeCoef), palette.primary(), palette.highlight(), 1));
 	}
 
 	public static void appendIncendiaryDualCannonProjectileInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip,
@@ -434,6 +452,7 @@ public class CBCMSTooltip {
 		float maximumMomentum = properties.dualCannonProperties().maximumMomentum();
 		float fireChance = properties.incendiary().fireChance();
 		int fireRange = properties.incendiary().fireRange();
+		float reloadTimeCoef = properties.dualCannonProperties().reloadTimeCoef();
 		TooltipHelper.Palette palette = getPalette(level, stack);
 		String key1 = stack.getDescriptionId();
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
@@ -441,7 +460,7 @@ public class CBCMSTooltip {
 				String.format("%.0f",fireChance*100), fireRange,
 				String.format("%.0f",initVel*20), projectileSpread, minimumSpread,
 				String.format("%.1f",(float)lifetime/20),String.format("%.0f",Math.acos(deflection)*180/Math.PI), smashToughness,
-				maximumMomentum), palette.primary(), palette.highlight(), 1));
+				maximumMomentum, reloadTimeCoef), palette.primary(), palette.highlight(), 1));
 	}
 
 	public static void genericItemTooltipInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip,

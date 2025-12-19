@@ -14,10 +14,8 @@ import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.projectile_rack_end
 import com.cainiao1053.cbcmoreshells.index.CBCMSContraptionTypes;
 import com.cainiao1053.cbcmoreshells.index.CBCMSProjectileRackMaterials;
 import com.cainiao1053.cbcmoreshells.index.CBCMSSoundEvents;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.AbstractDualRackedRocketProjectile;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.AbstractRackedProjectile;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.AbstractRackedRocketProjectile;
-import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.RackedProjectileBlock;
+import com.cainiao1053.cbcmoreshells.index.CBCMSTags;
+import com.cainiao1053.cbcmoreshells.munitions.racked_projectile.*;
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.ContraptionType;
@@ -85,6 +83,7 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 	Ship ship = null;
 
 	private BlockState breechState = null;
+	protected boolean hasStabilizer = false;
 
 	Logger LOGGER = Cbcmoreshells.LOGGER;
 
@@ -220,6 +219,10 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 			BlockEntity be = BlockEntity.loadStatic(localPos, alignedState, blockInfo.nbt());
 			this.presentBlockEntities.put(localPos, be);
 			if (be instanceof IProjectileRackBlockEntity cbe && cbe.cannonBehavior().isWelded()) this.hasWeldedPenalty = true;
+
+			if(blockInfo.state().is(CBCMSTags.CBCMSBlockTags.RACK_STABILIZER)){
+				this.hasStabilizer = true;
+			}
 		}
 		this.cannonMaterial = material;
 
@@ -454,19 +457,7 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		Vec3 spawnPos = entity.toGlobalVector(Vec3.atCenterOf(currentPos.relative(this.initialOrientation)), 0);
 		Vec3 vec = spawnPos.subtract(entity.toGlobalVector(Vec3.atCenterOf(BlockPos.ZERO), 0)).normalize();
 		spawnPos = spawnPos.subtract(vec.scale(2));
-
-		if(ship != null) {
-			Vector3d vecV3d = new Vector3d(vec.x, vec.y, vec.z);
-			Vector3d shipVel = new Vector3d(ship.getVelocity().x(), ship.getVelocity().y(), ship.getVelocity().z());
-			Quaterniondc trf = ship.getTransform().getShipToWorldRotation().conjugate(new Quaterniond());
-			Vector3d velInShip = trf.transform(shipVel);
-			double projScale = velInShip.dot(vecV3d)*0.025;
-			if(projScale<0){
-				projScale = 0;
-			}
-			Vector3d velPrjGunInShip = vecV3d.mul(projScale);
-			spawnPos = new Vec3(spawnPos.x +velPrjGunInShip.x, spawnPos.y + velPrjGunInShip.y, spawnPos.z + velPrjGunInShip.z);
-		}
+		//float initVel = projectile.initialVelocity();
 
 
 		if (propelCtx.chargesUsed < minimumSpread) propelCtx.chargesUsed = minimumSpread;
@@ -474,6 +465,43 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		float recoilMagnitude = 0;
 
 		if (projectile != null) {
+			float initVel = projectile.initialVelocity();
+			if(ship != null) {
+				Vector3d vecV3d = new Vector3d(vec.x, vec.y, vec.z);
+				Vector3d shipVel = new Vector3d(ship.getVelocity().x(), ship.getVelocity().y(), ship.getVelocity().z());
+
+//				Vector3dc shipVelForFix = ship.getVelocity().div(20, new Vector3d());
+//				Vector3dc shipVelInShip = ship.getWorldToShip().transformDirection(shipVelForFix, new Vector3d());
+//				Vec3 shipVelVec3 = new Vec3(shipVelInShip.x(), shipVelInShip.y(), shipVelInShip.z());
+//				double scale = shipVelVec3.dot(vec);
+//				Vec3 proj = new Vec3(vec.x() * scale, vec.y() * scale, vec.z() * scale);
+//				Vec3 rej = shipVelVec3.subtract(proj);
+//				Vec3 vecOut = vec.scale(initVel).subtract(rej); //extract normal
+//				initVel =(float) vecOut.length();
+//				vec = vecOut.normalize();
+
+				if(this.hasStabilizer){ //some condition, pending in future
+					Vector3dc shipVelForFix = ship.getVelocity().div(20, new Vector3d());
+					Vector3dc shipVelInShip = ship.getWorldToShip().transformDirection(shipVelForFix, new Vector3d());
+					Vec3 shipVelVec3 = new Vec3(shipVelInShip.x(), shipVelInShip.y(), shipVelInShip.z());
+					double scale = shipVelVec3.dot(vec);
+					Vec3 proj = new Vec3(vec.x() * scale, vec.y() * scale, vec.z() * scale);
+					Vec3 rej = shipVelVec3.subtract(proj);
+					Vec3 vecOut = vec.scale(initVel).subtract(rej); //extract normal
+					initVel =(float) vecOut.length();
+					vec = vecOut.normalize();
+				}
+
+				Quaterniondc trf = ship.getTransform().getShipToWorldRotation().conjugate(new Quaterniond());
+				Vector3d velInShip = trf.transform(shipVel);
+				double projScale = velInShip.dot(vecV3d)*0.025;
+				if(projScale<0){
+					projScale = 0;
+				}
+				Vector3d velPrjGunInShip = vecV3d.mul(projScale);
+				spawnPos = new Vec3(spawnPos.x +velPrjGunInShip.x, spawnPos.y + velPrjGunInShip.y, spawnPos.z + velPrjGunInShip.z);
+			}
+
 			if (projectile instanceof IntegratedPropellantProjectile integPropel && !projectileBlocks.isEmpty()) {
 				if (!propelCtx.addIntegratedPropellant(integPropel, projectileBlocks.get(0), this.initialOrientation) && canFail) {
 					this.fail(currentPos, level, entity, null, (int) propelCtx.chargesUsed);
@@ -495,14 +523,14 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 
 			if(projectile instanceof AbstractDualRackedRocketProjectile && projectileBlockDuplicate!=null) {
 				Vec3 vecRot = vec.yRot((float)Math.PI/2).scale(0.35);
-				multiShoot(level, entity, projectileBlockDuplicate, projectileBlocks, propelCtx.chargesUsed, spawnPos, vec, vecRot);
+				multiShoot(level, entity, projectileBlockDuplicate, projectileBlocks, propelCtx.chargesUsed, spawnPos, vec, vecRot, initVel);
 				spawnPos = spawnPos.subtract(vecRot);
 			}
 
 			projectile.setPos(spawnPos);
 			projectile.setChargePower(propelCtx.chargesUsed);
 			//AbstractRackedProjectile projectile1 = projectile;
-			projectile.shoot(vec.x, vec.y, vec.z, projectile.initialVelocity(), projectile.projectileSpread());
+			projectile.shoot(vec.x, vec.y, vec.z, initVel, projectile.projectileSpread());
 			//projectile1.shoot(vec.x, vec.y, vec.z, projectile.initialVelocity()+0.1f, projectile.projectileSpread());
 			projectile.xRotO = projectile.getXRot();
 			projectile.yRotO = projectile.getYRot();
@@ -529,7 +557,8 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		propelCtx.smokeScale = Math.max(1, propelCtx.smokeScale);
 
 		SoundEvent soundSource;
-		if(projectile instanceof AbstractDualRackedRocketProjectile || projectile instanceof AbstractRackedRocketProjectile) {
+		if(projectile instanceof AbstractDualRackedRocketProjectile || projectile instanceof AbstractRackedRocketProjectile
+		|| projectile instanceof AbstractRackedLoiteringRocketProjectile) {
 			soundSource = CBCMSSoundEvents.ROCKET_LAUNCH.getMainEvent();
 			volume = 2f;
 			pitch = 1f;
@@ -572,11 +601,11 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		}
 	}
 
-	public void multiShoot(ServerLevel level, PitchOrientedContraptionEntity entity, RackedProjectileBlock<?> prjB, List<StructureBlockInfo> projectileBlocks, float chargesUsed, Vec3 spawnPos, Vec3 vec, Vec3 vecRot) {
+	public void multiShoot(ServerLevel level, PitchOrientedContraptionEntity entity, RackedProjectileBlock<?> prjB, List<StructureBlockInfo> projectileBlocks, float chargesUsed, Vec3 spawnPos, Vec3 vec, Vec3 vecRot, float initVelMag) {
 		AbstractRackedProjectile p = prjB.getProjectile(level, projectileBlocks);
 		p.setPos(spawnPos.add(vecRot));
 		p.setChargePower(chargesUsed);
-		p.shoot(vec.x, vec.y, vec.z, p.initialVelocity(), p.projectileSpread()+0.5f);
+		p.shoot(vec.x, vec.y, vec.z, initVelMag, p.projectileSpread()+0.5f);
 		p.xRotO = p.getXRot();
 		p.yRotO = p.getYRot();
 		p.addUntouchableEntity(entity, 6);
@@ -600,48 +629,48 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		this.blocks.put(oldInfo.pos(), consumedInfo);
 	}
 
-	private static boolean rollSquib(RandomSource random) {
-		float f = CBCConfigs.SERVER.failure.squibChance.getF();
-		return f != 0 && random.nextFloat() <= f;
-	}
-
-	private void squibBlocks(BlockPos currentPos, List<StructureBlockInfo> projectileBlocks) {
-		for (int i = 0; i < projectileBlocks.size(); ++i) {
-			BlockPos pos = currentPos.relative(this.initialOrientation, i);
-			StructureBlockInfo cannonInfo1 = this.blocks.get(pos);
-			BlockEntity be1 = this.presentBlockEntities.get(pos);
-			StructureBlockInfo projBlock = projectileBlocks.get(i);
-
-			if (cannonInfo1 != null && be1 instanceof IProjectileRackBlockEntity cbe1) {
-				BigCannonBehavior behavior1 = cbe1.cannonBehavior();
-				behavior1.loadBlock(projBlock);
-				CompoundTag tag = behavior1.blockEntity.saveWithFullMetadata();
-				tag.remove("x");
-				tag.remove("y");
-				tag.remove("z");
-				StructureBlockInfo squibInfo = new StructureBlockInfo(cannonInfo1.pos(), cannonInfo1.state(), tag);
-				this.blocks.put(cannonInfo1.pos(), squibInfo);
-			} else {
-				CompoundTag tag = projBlock.nbt();
-				if (tag != null) {
-					tag.remove("x");
-					tag.remove("y");
-					tag.remove("z");
-				}
-				this.blocks.put(pos, new StructureBlockInfo(pos, projBlock.state(), tag));
-			}
-		}
-	}
-
-	private static boolean rollBarrelBurst(RandomSource random) {
-		float f = CBCConfigs.SERVER.failure.barrelChargeBurstChance.getF();
-		return f != 0 && random.nextFloat() <= f;
-	}
-
-	private static boolean rollOverloadBurst(RandomSource random) {
-		float f = CBCConfigs.SERVER.failure.overloadBurstChance.getF();
-		return f != 0 && random.nextFloat() <= f;
-	}
+//	private static boolean rollSquib(RandomSource random) {
+//		float f = CBCConfigs.SERVER.failure.squibChance.getF();
+//		return f != 0 && random.nextFloat() <= f;
+//	}
+//
+//	private void squibBlocks(BlockPos currentPos, List<StructureBlockInfo> projectileBlocks) {
+//		for (int i = 0; i < projectileBlocks.size(); ++i) {
+//			BlockPos pos = currentPos.relative(this.initialOrientation, i);
+//			StructureBlockInfo cannonInfo1 = this.blocks.get(pos);
+//			BlockEntity be1 = this.presentBlockEntities.get(pos);
+//			StructureBlockInfo projBlock = projectileBlocks.get(i);
+//
+//			if (cannonInfo1 != null && be1 instanceof IProjectileRackBlockEntity cbe1) {
+//				BigCannonBehavior behavior1 = cbe1.cannonBehavior();
+//				behavior1.loadBlock(projBlock);
+//				CompoundTag tag = behavior1.blockEntity.saveWithFullMetadata();
+//				tag.remove("x");
+//				tag.remove("y");
+//				tag.remove("z");
+//				StructureBlockInfo squibInfo = new StructureBlockInfo(cannonInfo1.pos(), cannonInfo1.state(), tag);
+//				this.blocks.put(cannonInfo1.pos(), squibInfo);
+//			} else {
+//				CompoundTag tag = projBlock.nbt();
+//				if (tag != null) {
+//					tag.remove("x");
+//					tag.remove("y");
+//					tag.remove("z");
+//				}
+//				this.blocks.put(pos, new StructureBlockInfo(pos, projBlock.state(), tag));
+//			}
+//		}
+//	}
+//
+//	private static boolean rollBarrelBurst(RandomSource random) {
+//		float f = CBCConfigs.SERVER.failure.barrelChargeBurstChance.getF();
+//		return f != 0 && random.nextFloat() <= f;
+//	}
+//
+//	private static boolean rollOverloadBurst(RandomSource random) {
+//		float f = CBCConfigs.SERVER.failure.overloadBurstChance.getF();
+//		return f != 0 && random.nextFloat() <= f;
+//	}
 
 	private static boolean rollFailToIgnite(RandomSource random) {
 		float f = CBCConfigs.SERVER.failure.interruptedIgnitionChance.getF();
@@ -703,6 +732,7 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		if (this.mortarDelay > 0) tag.putInt("MortarDelay", this.mortarDelay);
 		if (this.cachedMortarRound != null && !this.cachedMortarRound.isEmpty()) tag.put("CachedMortarRound", this.cachedMortarRound.save(new CompoundTag()));
 		if (this.hasFired) tag.putBoolean("HasFired", true);
+		tag.putBoolean("hasStabilizer", this.hasStabilizer);
 		return tag;
 	}
 
@@ -715,6 +745,7 @@ public class MountedProjectileRackContraption extends AbstractMountedCannonContr
 		this.mortarDelay = Math.max(0, tag.getInt("MortarDelay"));
 		this.cachedMortarRound = tag.contains("CachedMortarRound", Tag.TAG_COMPOUND) ? ItemStack.of(tag.getCompound("CachedMortarRound")) : ItemStack.EMPTY;
 		this.hasFired = tag.contains("HasFired");
+		this.hasStabilizer = tag.getBoolean("hasStabilizer");
 	}
 
 	@Override

@@ -409,7 +409,6 @@ public class MountedTorpedoTubeContraption extends AbstractMountedCannonContrapt
 			float torpVel = projectile.getTorpedoSpeed();
 			Ship ship = getShipOn(level, this.anchor);
 			if(ship !=null){
-//				LOGGER.info("vec" + vec);
 				Vector3dc shipVel = ship.getVelocity().div(20, new Vector3d());
 				Vector3dc shipVelInShip = ship.getWorldToShip().transformDirection(shipVel, new Vector3d());
 				Vec3 shipVelVec3 = new Vec3(shipVelInShip.x(), shipVelInShip.y(), shipVelInShip.z());
@@ -417,13 +416,8 @@ public class MountedTorpedoTubeContraption extends AbstractMountedCannonContrapt
 				Vec3 proj = new Vec3(vec.x() * scale, vec.y() * scale, vec.z() * scale);
 				Vec3 rej = shipVelVec3.subtract(proj);
 				Vec3 vecOut = vec.scale(torpVel).subtract(rej); //extract normal
-				//Vec3 vecOut = vec.scale(torpVel).subtract(shipVelVec3); //extract all
 				torpVel =(float) vecOut.length();
 				vec = vecOut.normalize();
-//				LOGGER.info("torpVel " + torpVel);
-//				LOGGER.info("shipvel "+ shipVelVec3);
-//				LOGGER.info("proj " + proj);
-//				LOGGER.info("rej " + rej);
 			}
 			StructureBlockInfo muzzleInfo = this.blocks.get(currentPos);
 			if (canFail && muzzleInfo != null && !muzzleInfo.state().isAir()) {

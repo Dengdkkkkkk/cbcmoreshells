@@ -1,38 +1,27 @@
 package com.cainiao1053.cbcmoreshells.cannon_control.contraption;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.function.Consumer;
-
-import javax.annotation.Nullable;
-
 import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
+import com.cainiao1053.cbcmoreshells.cannon_control.cannon_types.CBCMSCannonContraptionTypes;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBlock;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.IDualCannonBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.DualCannonBreechStrengthHandler;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.quick_firing_breech.DualCannonQuickfiringBreechBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.dual_cannon_end.DualCannonEnd;
+import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.equipments.DualCannonChargerAttachment;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterial;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.material.DualCannonMaterialProperties;
 import com.cainiao1053.cbcmoreshells.index.CBCMSContraptionTypes;
-import com.cainiao1053.cbcmoreshells.cannon_control.cannon_types.CBCMSCannonContraptionTypes;
-
 import com.cainiao1053.cbcmoreshells.index.CBCMSDualCannonMaterials;
 import com.cainiao1053.cbcmoreshells.index.CBCMSSoundEvents;
+import com.cainiao1053.cbcmoreshells.index.CBCMSTags;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.AbstractDualCannonProjectile;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.DualCannonProjectileBlock;
 import com.cainiao1053.cbcmoreshells.network.CBCMSNetworkImpl;
 import com.cainiao1053.cbcmoreshells.network.ClientboundCannonCmdSyncPacket;
 import com.google.common.collect.ImmutableList;
-import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.ContraptionType;
 import com.simibubi.create.content.contraptions.StructureTransform;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,7 +49,6 @@ import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 import rbasamoyai.createbigcannons.CBCTags;
 import rbasamoyai.createbigcannons.cannon_control.ControlPitchContraption;
-//import rbasamoyai.createbigcannons.cannon_control.cannon_types.CBCCannonContraptionTypes;
 import rbasamoyai.createbigcannons.cannon_control.cannon_types.ICannonContraptionType;
 import rbasamoyai.createbigcannons.cannon_control.contraption.AbstractMountedCannonContraption;
 import rbasamoyai.createbigcannons.cannon_control.contraption.PitchOrientedContraptionEntity;
@@ -69,7 +57,6 @@ import rbasamoyai.createbigcannons.config.CBCConfigs;
 import rbasamoyai.createbigcannons.crafting.casting.CannonCastShape;
 import rbasamoyai.createbigcannons.effects.particles.explosions.CannonBlastWaveEffectParticleData;
 import rbasamoyai.createbigcannons.effects.particles.plumes.BigCannonPlumeParticleData;
-import rbasamoyai.createbigcannons.index.CBCSoundEvents;
 import rbasamoyai.createbigcannons.munitions.big_cannon.ProjectileBlock;
 import rbasamoyai.createbigcannons.munitions.big_cannon.propellant.BigCannonPropellantBlock;
 import rbasamoyai.createbigcannons.munitions.big_cannon.propellant.IntegratedPropellantProjectile;
@@ -77,6 +64,10 @@ import rbasamoyai.createbigcannons.munitions.config.BigCannonPropellantCompatibi
 import rbasamoyai.createbigcannons.munitions.config.BigCannonPropellantCompatibilityHandler;
 import rbasamoyai.createbigcannons.utils.CBCUtils;
 import rbasamoyai.ritchiesprojectilelib.RitchiesProjectileLib;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class MountedDualCannonContraption extends AbstractMountedCannonContraption {
 
@@ -90,6 +81,12 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 	public float commandSpreadModifier = 1;
 	public float commandReloadTimeModifier = 1;
 	public float commandLifetimeModifier = 1;
+	private float equipmentDurabilityModifier = 1;
+	private float equipmentSpreadModifier = 1;
+	private float equipmentReloadModifier = 1;
+	private float equipmentLifetimeModifier = 1;
+	private float commandCooldownModifier = 1;
+	private float commandDurationModifier = 1;
 	private int barrelInverter = 1;
 
 	Logger LOGGER = Cbcmoreshells.LOGGER;
@@ -101,7 +98,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 	public boolean assemble(Level level, BlockPos pos) throws AssemblyException {
 		if (!this.collectCannonBlocks(level, pos)) return false;
 		this.bounds = this.createBoundsFromExtensionLengths();
-		this.commandCooldown = this.cannonMaterial.properties().combatCommandCooldown();
+		//this.commandCooldown = this.cannonMaterial.properties().combatCommandCooldown();
 		return !this.blocks.isEmpty();
 	}
 
@@ -200,6 +197,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 		this.anchor = pos;
 
 		this.startPos = this.startPos.subtract(pos);
+		boolean combatCommandEquipmentPresent = false;
 		for (StructureBlockInfo blockInfo : cannonBlocks) {
 			BlockPos localPos = blockInfo.pos().subtract(pos);
 			StructureBlockInfo localBlockInfo = new StructureBlockInfo(localPos, blockInfo.state(), blockInfo.nbt());
@@ -209,10 +207,27 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			BlockEntity be = BlockEntity.loadStatic(localPos, blockInfo.state(), blockInfo.nbt());
 			this.presentBlockEntities.put(localPos, be);
 			if (be instanceof IDualCannonBlockEntity cbe && cbe.cannonBehavior().isWelded()) this.hasWeldedPenalty = true;
+			if(blockInfo.state().is(CBCMSTags.CBCMSBlockTags.COMBAT_COMMAND_EQUIPMENT)){
+				combatCommandEquipmentPresent = true;
+			}
 		}
 		this.cannonMaterial = material;
+		if(combatCommandEquipmentPresent){
+			//Cbcmoreshells.LOGGER.info("Combat command equipment present");
+			addCommandEquipmentModification();
+		}
+		this.commandCooldown =(int) (this.cannonMaterial.properties().combatCommandCooldown() * this.commandCooldownModifier);
 
 		return true;
+	}
+
+	public void addCommandEquipmentModification(){
+		this.equipmentLifetimeModifier += DualCannonChargerAttachment.LIFETIME_MODIFICATION;
+		this.equipmentReloadModifier += DualCannonChargerAttachment.RELOAD_TIME_MODIFICATION;
+		this.equipmentSpreadModifier += DualCannonChargerAttachment.SPREAD_MODIFICATION;
+		this.equipmentDurabilityModifier += DualCannonChargerAttachment.DURABILITY_MASS_MODIFICATION;
+		this.commandCooldownModifier = DualCannonChargerAttachment.COMMAND_COOLDOWN_MODIFICATION;
+		this.commandDurationModifier = DualCannonChargerAttachment.COMMAND_DURATION_MODIFICATION;
 	}
 
 	private boolean isValidCannonBlock(LevelAccessor level, BlockState state, BlockPos pos) {
@@ -258,7 +273,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			commandLeft--;
 			if(commandLeft==0){
 				//this.commandEffect = false;
-				this.commandCooldown = this.cannonMaterial.properties().combatCommandCooldown();
+				this.commandCooldown =(int) (this.cannonMaterial.properties().combatCommandCooldown() * this.commandCooldownModifier);
 				deactivateCombatCommand();
 			}
 		}
@@ -429,8 +444,13 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 		float recoilMagnitude = 0;
 
 		int barrelLifetime = (this.cannonMaterial.properties().addedLifetime());
-		float durabilityMassModifier = this.cannonMaterial.properties().durabilityMassModifier()*this.commandDurabilityMassModifier;
+		float durabilityMassModifier = this.cannonMaterial.properties().durabilityMassModifier()*this.commandDurabilityMassModifier * this.equipmentDurabilityModifier;
 
+//		Cbcmoreshells.LOGGER.info("final durability mass" + durabilityMassModifier);
+//		Cbcmoreshells.LOGGER.info("final lifetime" + barrelLifetime);
+//		Cbcmoreshells.LOGGER.info("final reload" + this.equipmentReloadModifier);
+//		Cbcmoreshells.LOGGER.info("command left" + this.commandLeft);
+//		Cbcmoreshells.LOGGER.info("command cooldown" + this.commandCooldown);
 		if (projectile != null) {
 			if (projectile instanceof IntegratedPropellantProjectile integPropel && !projectileBlocks.isEmpty()) {
 				if (!propelCtx.addIntegratedPropellant(integPropel, projectileBlocks.get(0), this.initialOrientation) && canFail) {
@@ -445,13 +465,13 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			}
 			projectile.setPos(spawnPos.add(horizontalOffsetVec));
 			projectile.setChargePower(propelCtx.chargesUsed);
-			projectile.setLifetime((int) ((projectile.getLifetime()+barrelLifetime)*this.commandLifetimeModifier));
+			projectile.setLifetime((int) ((projectile.getLifetime()+barrelLifetime)*this.commandLifetimeModifier * this.equipmentLifetimeModifier));
 			projectile.setDurabilityModifier(durabilityMassModifier);
 			projectile.setProjectileMass(durabilityMassModifier*projectile.getMaximumMass());
 
 			projectile.shoot(vec.x, vec.y, vec.z,
 			projectile.getInitVel(), //init vel
-			(Math.max(projectile.getProjectileSpread() - spreadSub*subLength, projectile.getProjectileMinimumSpread()+minimumSpread))*this.commandSpreadModifier); //spread
+			(Math.max(projectile.getProjectileSpread() - spreadSub*subLength, projectile.getProjectileMinimumSpread()+minimumSpread))*this.commandSpreadModifier * this.equipmentSpreadModifier); //spread
 
 			projectile.xRotO = projectile.getXRot();
 			projectile.yRotO = projectile.getYRot();
@@ -476,13 +496,13 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			}
 			secondary_projectile.setPos(spawnPos.subtract(horizontalOffsetVec));
 			secondary_projectile.setChargePower(propelCtx.chargesUsed);
-			secondary_projectile.setLifetime((int)((secondary_projectile.getLifetime()+barrelLifetime)*this.commandLifetimeModifier));
+			secondary_projectile.setLifetime((int)((secondary_projectile.getLifetime()+barrelLifetime)*this.commandLifetimeModifier * this.equipmentLifetimeModifier));
 			secondary_projectile.setDurabilityModifier(durabilityMassModifier);
 			secondary_projectile.setProjectileMass(durabilityMassModifier*secondary_projectile.getMaximumMass());
 
 			secondary_projectile.shoot(vec.x, vec.y, vec.z,
 			secondary_projectile.getInitVel(), //init vel
-			(secondary_projectile.getProjectileMinimumSpread()+Math.max(secondary_projectile.getProjectileSpread() - spreadSub*subLength, minimumSpread))*this.commandSpreadModifier); //spread
+			(secondary_projectile.getProjectileMinimumSpread()+Math.max(secondary_projectile.getProjectileSpread() - spreadSub*subLength, minimumSpread))*this.commandSpreadModifier * this.equipmentSpreadModifier); //spread
 
 			secondary_projectile.xRotO = secondary_projectile.getXRot();
 			secondary_projectile.yRotO = secondary_projectile.getYRot();
@@ -551,8 +571,9 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 	public DualCannonMaterial getCannonMaterial() {
 		return this.cannonMaterial;
 	}
+
 	public float getReloadTimeModifier() {
-		return this.cannonMaterial.properties().reloadTimeModifier()*this.commandReloadTimeModifier;
+		return this.cannonMaterial.properties().reloadTimeModifier()*this.commandReloadTimeModifier * this.equipmentReloadModifier;
 	}
 
 	public record CannonPose(Vec3 muzzleWorld, Vec3 forwardUnit, int munitionCount) {}
@@ -626,7 +647,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 
 	public void activateCombatCommand(){
 		this.commandEffect = true;
-		this.commandLeft = this.cannonMaterial.properties().combatCommandDuration();
+		this.commandLeft =(int) (this.cannonMaterial.properties().combatCommandDuration() * this.commandDurationModifier);
 		if (this.entity != null && this.entity.level() instanceof ServerLevel slevel) {
 			CBCMSNetworkImpl.sendToClientTracking(
 					new ClientboundCannonCmdSyncPacket(this.entity.getId(), this.commandEffect, this.commandCooldown, this.commandLeft),
@@ -751,6 +772,12 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 		if (this.commandEffect) tag.putBoolean("CommandEffect", true);
 		tag.putInt("CommandCooldown", this.commandCooldown);
 		tag.putInt("CommandLeft", this.commandLeft);
+		tag.putFloat("equipmentDurabilityModifier", this.equipmentDurabilityModifier);
+		tag.putFloat("equipmentReloadModifier", this.equipmentReloadModifier);
+		tag.putFloat("equipmentSpreadModifier", this.equipmentSpreadModifier);
+		tag.putFloat("equipmentLifetimeModifier", this.equipmentLifetimeModifier);
+		tag.putFloat("commandCooldownModifier", this.commandCooldownModifier);
+		tag.putFloat("commandDurationModifier", this.commandDurationModifier);
 		return tag;
 	}
 
@@ -766,6 +793,12 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 		this.commandEffect = tag.contains("CommandEffect");
 		this.commandCooldown = tag.getInt("CommandCooldown");
 		this.commandLeft = tag.getInt("CommandLeft");
+		this.equipmentDurabilityModifier = tag.getFloat("equipmentDurabilityModifier");
+		this.equipmentReloadModifier = tag.getFloat("equipmentReloadModifier");
+		this.equipmentSpreadModifier = tag.getFloat("equipmentSpreadModifier");
+		this.equipmentLifetimeModifier = tag.getFloat("equipmentLifetimeModifier");
+		this.commandCooldownModifier = tag.getFloat("commandCooldownModifier");
+		this.commandDurationModifier = tag.getFloat("commandDurationModifier");
 	}
 
 	@Override

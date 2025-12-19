@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.IItemHandler;
 import org.slf4j.Logger;
 import rbasamoyai.createbigcannons.munitions.big_cannon.ProjectileBlockItem;
 import rbasamoyai.createbigcannons.munitions.big_cannon.propellant.BigCartridgeBlockItem;
@@ -21,24 +22,67 @@ public class AmmoRackInteractionPoint extends ArmInteractionPoint {
 	Logger LOGGER = Cbcmoreshells.LOGGER;
 
 
-	@Override
-	public ItemStack extract(int slot, boolean simulate) {
-		if(!simulate) {
-			return ItemStack.EMPTY;
-		}
-		AmmoRackBlockEntity be = (AmmoRackBlockEntity) level.getBlockEntity(pos);
-		ItemStack stack = be.getInventory().extractItem(slot,1,simulate);
-		if(stack.getItem() instanceof BigCartridgeBlockItem) {
-			return stack;
-		}
-		if(!(stack.getItem() instanceof ProjectileBlockItem)) {
-			return ItemStack.EMPTY;
-		}
-		if(!be.getInventory().isItemValid(slot, stack)) {
-			return ItemStack.EMPTY;
-		}
+//	@Override
+//	public ItemStack extract(int slot, boolean simulate) {
+//		if(!simulate) {
+//			return ItemStack.EMPTY;
+//		}
+//		AmmoRackBlockEntity be = (AmmoRackBlockEntity) level.getBlockEntity(pos);
+//		ItemStack stack = be.getInventory().extractItem(slot,1,simulate);
+//		if(stack.getItem() instanceof BigCartridgeBlockItem) {
+//			return stack;
+//		}
+//		if(!(stack.getItem() instanceof ProjectileBlockItem)) {
+//			return ItemStack.EMPTY;
+//		}
+//		if(!be.getInventory().isItemValid(slot, stack)) {
+//			return ItemStack.EMPTY;
+//		}
+//		return stack;
+//	}
+
+//	@Override
+//	public ItemStack extract(int slot, boolean simulate) {
+//		AmmoRackBlockEntity be = (AmmoRackBlockEntity) level.getBlockEntity(pos);
+//		ItemStack stack = be.getInventory().getStackInSlot(slot);
+//		if(stack.isEmpty()){
+//			return ItemStack.EMPTY;
+//		}
+////		if(!simulate){
+////			stack = be.getInventory().extractItem(slot, 1, simulate);
+////		}
+//		//LOGGER.info("simulate: " + simulate);
+//		if(stack.getItem() instanceof BigCartridgeBlockItem) {
+//			return stack;
+//		}
+//		if(!(stack.getItem() instanceof ProjectileBlockItem)) {
+//			return ItemStack.EMPTY;
+//		}
+//		if(!be.getInventory().isItemValid(slot, stack)) {
+//			return ItemStack.EMPTY;
+//		}
+//		return stack;
+//	}
+
+@Override
+public ItemStack extract(int slot, int amount, boolean simulate) {
+	AmmoRackBlockEntity be = (AmmoRackBlockEntity) level.getBlockEntity(pos);
+	IItemHandler handler = this.getHandler();
+	if (handler == null) {
+		return ItemStack.EMPTY;
+	}
+	ItemStack stack = handler.extractItem(slot, 1, simulate);
+	if(stack.getItem() instanceof BigCartridgeBlockItem) {
 		return stack;
 	}
+	if(!(stack.getItem() instanceof ProjectileBlockItem)) {
+		return ItemStack.EMPTY;
+	}
+	if(!be.getInventory().isItemValid(slot, stack)) {
+		return ItemStack.EMPTY;
+	}
+	return stack;
+}
 
 	@Override
 	public void cycleMode() {

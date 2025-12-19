@@ -1,6 +1,6 @@
 {
   "entity_damage": 40.0,
-  "durability_mass": 7.5,
+  "durability_mass": 8.0,
   "renders_invulnerable": false,
   "ignores_invulnerability": true,
   "ignores_entity_armor": true,
@@ -21,5 +21,6 @@
   "minimum_spread": 0.1,
   "smash_toughness": 10,
   "explosion_cooldown": 10,
-  "maximum_momentum": 80
+  "maximum_momentum": 220,
+  "reload_time_coef": 1.25
 }

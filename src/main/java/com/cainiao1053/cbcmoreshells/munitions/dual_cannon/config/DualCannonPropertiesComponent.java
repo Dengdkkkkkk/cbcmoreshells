@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
-public record DualCannonPropertiesComponent(float addedChargePower, float minimumChargePower, boolean canSquib, float addedRecoil, float initialVel, float projectileSpread, float minimumSpread, float smashToughness, int lifetime, float maximumMomentum) {
+public record DualCannonPropertiesComponent(float addedChargePower, float minimumChargePower, boolean canSquib, float addedRecoil, float initialVel, float projectileSpread, float minimumSpread, float smashToughness, int lifetime, float maximumMomentum, float reloadTimeCoef) {
 
-	public static final DualCannonPropertiesComponent DEFAULT = new DualCannonPropertiesComponent(0, 0, false, 0, 4, 4, 1, 6, 30, 250);
+	public static final DualCannonPropertiesComponent DEFAULT = new DualCannonPropertiesComponent(0, 0, false, 0, 4, 4, 1, 6, 30, 250, 1);
 
 	public static DualCannonPropertiesComponent fromJson(String id, JsonObject obj) {
 		float addedChargePower = Math.max(0, GsonHelper.getAsFloat(obj, "added_charge_power", 0));
@@ -20,11 +20,12 @@ public record DualCannonPropertiesComponent(float addedChargePower, float minimu
 		float smashToughness = Math.max(0, GsonHelper.getAsFloat(obj, "smash_toughness", 6f));
 		int lifetime = Math.max(0, GsonHelper.getAsInt(obj, "lifetime", 30));
 		float maximumMomentum = Math.max(0, GsonHelper.getAsFloat(obj, "maximum_momentum", 250f));
-		return new DualCannonPropertiesComponent(addedChargePower, minimumChargePower, canSquib, addedRecoil, initialVel, projectileSpread, minimumSpread, smashToughness, lifetime, maximumMomentum);
+		float reloadTimeCoef = Math.max(0, GsonHelper.getAsFloat(obj, "reload_time_coef", 1f));
+		return new DualCannonPropertiesComponent(addedChargePower, minimumChargePower, canSquib, addedRecoil, initialVel, projectileSpread, minimumSpread, smashToughness, lifetime, maximumMomentum, reloadTimeCoef);
 	}
 
 	public static DualCannonPropertiesComponent fromNetwork(FriendlyByteBuf buf) {
-		return new DualCannonPropertiesComponent(buf.readFloat(), buf.readFloat(), buf.readBoolean(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readInt(), buf.readFloat());
+		return new DualCannonPropertiesComponent(buf.readFloat(), buf.readFloat(), buf.readBoolean(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readInt(), buf.readFloat(), buf.readFloat());
 	}
 
 	public void toNetwork(FriendlyByteBuf buf) {
@@ -37,7 +38,8 @@ public record DualCannonPropertiesComponent(float addedChargePower, float minimu
 		    .writeFloat(this.minimumSpread)
 			.writeFloat(this.smashToughness)
 			.writeInt(this.lifetime)
-			.writeFloat(this.maximumMomentum);
+			.writeFloat(this.maximumMomentum)
+			.writeFloat(this.reloadTimeCoef);
 	}
 
 }

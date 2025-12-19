@@ -1,7 +1,5 @@
 package com.cainiao1053.cbcmoreshells.index;
 
-import static rbasamoyai.createbigcannons.CreateBigCannons.REGISTRATE;
-
 import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
 import com.cainiao1053.cbcmoreshells.blocks.ammo_rack.AmmoRackBlockEntity;
 import com.cainiao1053.cbcmoreshells.blocks.ammo_rack.AmmoRackRenderer;
@@ -12,45 +10,38 @@ import com.cainiao1053.cbcmoreshells.blocks.dish_plate.DishPlateBlockEntity;
 import com.cainiao1053.cbcmoreshells.blocks.dish_plate.DishPlateRenderer;
 import com.cainiao1053.cbcmoreshells.blocks.landing_indicator.LandingIndicatorBlockEntity;
 import com.cainiao1053.cbcmoreshells.blocks.torpedo_detection_device.TorpedoDetectionDeviceBlockEntity;
-import com.cainiao1053.cbcmoreshells.blocks.torpedo_detection_device.TorpedoDetectionDeviceInstance;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.DualCannonBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.quick_firing_breech.DualCannonQuickfiringBreechBlockEntity;
-import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.quick_firing_breech.DualCannonQuickfiringBreechBlockEntityRenderer;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.quick_firing_breech.DualCannonQuickfiringBreechInstance;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.sliding_breech.DualCannonSlidingBreechBlockEntity;
-import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.sliding_breech.DualCannonSlidingBreechBlockEntityRenderer;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.breeches.sliding_breech.DualCannonSlidingBreechInstance;
 import com.cainiao1053.cbcmoreshells.cannons.dual_cannon.dual_cannon_end.DualCannonEndBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.ProjectileRackBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.ProjectileRackBlockRenderer;
-import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.quick_firing_breech.ProjectileRackQuickfiringBreechInstance;
-import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.quick_firing_breech.ProjectileRackQuickfiringBreechBlockEntityRenderer;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.quick_firing_breech.ProjectileRackQuickfiringBreechBlockEntity;
+import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.quick_firing_breech.ProjectileRackQuickfiringBreechBlockEntityRenderer;
+import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.quick_firing_breech.ProjectileRackQuickfiringBreechInstance;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.sliding_breech.ProjectileRackSlidingBreechBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.sliding_breech.ProjectileRackSlidingBreechBlockEntityRenderer;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.sliding_breech.ProjectileRackSlidingBreechInstance;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.projectile_rack_end.ProjectileRackEndBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.TorpedoTubeBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.quick_firing_breech.TorpQuickfiringBreechBlockEntity;
-import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.quick_firing_breech.TorpQuickfiringBreechBlockEntity;
-import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.sliding_breech.TorpedoSlidingBreechBlockEntity;
-import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.torpedo_end.TorpedoTubeEndBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.quick_firing_breech.TorpQuickfiringBreechBlockEntityRenderer;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.quick_firing_breech.TorpQuickfiringBreechInstance;
+import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.sliding_breech.TorpedoSlidingBreechBlockEntity;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.sliding_breech.TorpedoSlidingBreechBlockEntityRenderer;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.sliding_breech.TorpedoSlidingBreechInstance;
-
-import com.simibubi.create.content.kinetics.base.HalfShaftInstance;
-import com.simibubi.create.content.kinetics.base.ShaftInstance;
-import com.simibubi.create.content.kinetics.base.ShaftRenderer;
-import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
+import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.torpedo_end.TorpedoTubeEndBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.quickfiring_breech.QuickfiringBreechBlockEntity;
-import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.quickfiring_breech.QuickfiringBreechInstance;
 import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.quickfiring_breech.QuickfiringBreechBlockEntityRenderer;
+import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.quickfiring_breech.QuickfiringBreechInstance;
 import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.sliding_breech.SlidingBreechBlockEntity;
 import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.sliding_breech.SlidingBreechBlockEntityRenderer;
 import rbasamoyai.createbigcannons.cannons.big_cannons.breeches.sliding_breech.SlidingBreechInstance;
+
+import static rbasamoyai.createbigcannons.CreateBigCannons.REGISTRATE;
 
 
 public class CBCMSBlockEntities {
@@ -87,23 +78,33 @@ public class CBCMSBlockEntities {
 	public static final BlockEntityEntry<DualCannonBlockEntity> DUAL_CANNON_BODY = REGISTRATE
 			.blockEntity("dual_cannon_body", DualCannonBlockEntity::new)
 			.validBlocks(
-					CBCMSBlocks.STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.STEEL_DUAL_CANNON_CHAMBER,
-					CBCMSBlocks.WIDE_STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_STEEL_DUAL_CANNON_CHAMBER,
+					CBCMSBlocks.STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.STEEL_DUAL_CANNON_CHAMBER, CBCMSBlocks.STEEL_DUAL_CANNON_CHARGER,
+					CBCMSBlocks.WIDE_STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_STEEL_DUAL_CANNON_CHAMBER, CBCMSBlocks.WIDE_STEEL_DUAL_CANNON_CHARGER,
 					CBCMSBlocks.CAST_IRON_DUAL_CANNON_BARREL, CBCMSBlocks.CAST_IRON_DUAL_CANNON_CHAMBER,
 					CBCMSBlocks.BRONZE_DUAL_CANNON_BARREL,CBCMSBlocks.BRONZE_DUAL_CANNON_CHAMBER,
-					CBCMSBlocks.BRASS_DUAL_CANNON_BARREL,CBCMSBlocks.BRASS_DUAL_CANNON_CHAMBER,
+					CBCMSBlocks.BRASS_DUAL_CANNON_BARREL,CBCMSBlocks.BRASS_DUAL_CANNON_CHAMBER, CBCMSBlocks.BRASS_DUAL_CANNON_CHARGER,
 					CBCMSBlocks.ROSEQUARTZ_BRASS_DUAL_CANNON_BARREL,CBCMSBlocks.ROSEQUARTZ_BRASS_DUAL_CANNON_CHAMBER,
 					CBCMSBlocks.TOUGH_STEEL_DUAL_CANNON_BARREL,CBCMSBlocks.TOUGH_STEEL_DUAL_CANNON_CHAMBER,
 					CBCMSBlocks.NETHER_STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.NETHER_STEEL_DUAL_CANNON_CHAMBER,
 					CBCMSBlocks.WIDE_TOUGH_STEEL_DUAL_CANNON_BARREL,CBCMSBlocks.WIDE_TOUGH_STEEL_DUAL_CANNON_CHAMBER,
-					CBCMSBlocks.WIDE_BRASS_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_BRASS_DUAL_CANNON_CHAMBER,
+					CBCMSBlocks.WIDE_BRASS_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_BRASS_DUAL_CANNON_CHAMBER, CBCMSBlocks.WIDE_BRASS_DUAL_CANNON_CHARGER,
 					CBCMSBlocks.WIDE_ROSEQUARTZ_BRASS_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_ROSEQUARTZ_BRASS_DUAL_CANNON_CHAMBER,
-					CBCMSBlocks.WIDE_NETHER_STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_NETHER_STEEL_DUAL_CANNON_CHAMBER,
+					CBCMSBlocks.WIDE_NETHER_STEEL_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_NETHER_STEEL_DUAL_CANNON_CHAMBER, CBCMSBlocks.WIDE_NETHER_STEEL_DUAL_CANNON_CHARGER,
 					CBCMSBlocks.STEEL_SINGLE_CANNON_CHAMBER, CBCMSBlocks.STEEL_SINGLE_CANNON_BARREL,
 					CBCMSBlocks.WIDE_CAST_IRON_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_CAST_IRON_SINGLE_CANNON_CHAMBER,
 					CBCMSBlocks.WIDE_BRONZE_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_BRONZE_SINGLE_CANNON_CHAMBER,
 					CBCMSBlocks.WIDE_STEEL_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_STEEL_SINGLE_CANNON_CHAMBER,
-					CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_CHAMBER
+					CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_CHAMBER, CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_CHAMBER_SHIELDED,
+					CBCMSBlocks.MILITARY_SLATE_ALLOY_DUAL_CANNON_BARREL, CBCMSBlocks.MILITARY_SLATE_ALLOY_DUAL_CANNON_CHAMBER,
+					CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_DUAL_CANNON_CHAMBER, CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_DUAL_CANNON_CHAMBER_SHIELDED, CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_DUAL_CANNON_CHARGER,
+					CBCMSBlocks.SLATE_ALLOY_DUAL_CANNON_BARREL, CBCMSBlocks.SLATE_ALLOY_DUAL_CANNON_CHAMBER,
+					CBCMSBlocks.WIDE_SLATE_ALLOY_DUAL_CANNON_BARREL, CBCMSBlocks.WIDE_SLATE_ALLOY_DUAL_CANNON_CHAMBER, CBCMSBlocks.WIDE_SLATE_ALLOY_DUAL_CANNON_CHAMBER_SHIELDED, CBCMSBlocks.WIDE_SLATE_ALLOY_DUAL_CANNON_CHARGER,
+					CBCMSBlocks.BRASS_SINGLE_CANNON_BARREL, CBCMSBlocks.BRASS_SINGLE_CANNON_CHAMBER,
+					CBCMSBlocks.WIDE_BRASS_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_BRASS_SINGLE_CANNON_CHAMBER, CBCMSBlocks.WIDE_BRASS_SINGLE_CANNON_CHAMBER_SHIELDED,
+					CBCMSBlocks.SLATE_ALLOY_SINGLE_CANNON_BARREL, CBCMSBlocks.SLATE_ALLOY_SINGLE_CANNON_CHAMBER, CBCMSBlocks.SLATE_ALLOY_DUAL_CANNON_CHARGER,
+					CBCMSBlocks.WIDE_SLATE_ALLOY_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_SLATE_ALLOY_SINGLE_CANNON_CHAMBER, CBCMSBlocks.WIDE_SLATE_ALLOY_SINGLE_CANNON_CHAMBER_SHIELDED,
+					CBCMSBlocks.MILITARY_SLATE_ALLOY_SINGLE_CANNON_BARREL, CBCMSBlocks.MILITARY_SLATE_ALLOY_SINGLE_CANNON_CHAMBER,
+					CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_SINGLE_CANNON_BARREL, CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_SINGLE_CANNON_CHAMBER, CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_SINGLE_CANNON_CHAMBER_SHIELDED
 					)
 			.register();
 
@@ -135,7 +136,17 @@ public class CBCMSBlockEntities {
 					CBCMSBlocks.WIDE_CAST_IRON_SINGLE_CANNON_QUICKFIRING_BREECH,
 					CBCMSBlocks.WIDE_BRONZE_SINGLE_CANNON_QUICKFIRING_BREECH,
 					CBCMSBlocks.WIDE_STEEL_SINGLE_CANNON_QUICKFIRING_BREECH,
-					CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_QUICKFIRING_BREECH
+					CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.MILITARY_SLATE_ALLOY_DUAL_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_DUAL_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.SLATE_ALLOY_DUAL_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.WIDE_SLATE_ALLOY_DUAL_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.BRASS_SINGLE_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.WIDE_BRASS_SINGLE_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.SLATE_ALLOY_SINGLE_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.WIDE_SLATE_ALLOY_SINGLE_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.MILITARY_SLATE_ALLOY_SINGLE_CANNON_QUICKFIRING_BREECH,
+					CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_SINGLE_CANNON_QUICKFIRING_BREECH
 			)
 			.register();
 
@@ -159,7 +170,17 @@ public class CBCMSBlockEntities {
 					CBCMSBlocks.WIDE_CAST_IRON_SINGLE_CANNON_SLIDING_BREECH,
 					CBCMSBlocks.WIDE_BRONZE_SINGLE_CANNON_SLIDING_BREECH,
 					CBCMSBlocks.WIDE_STEEL_SINGLE_CANNON_SLIDING_BREECH,
-					CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_SLIDING_BREECH
+					CBCMSBlocks.WIDE_TOUGH_STEEL_SINGLE_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.MILITARY_SLATE_ALLOY_DUAL_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_DUAL_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.SLATE_ALLOY_DUAL_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.WIDE_SLATE_ALLOY_DUAL_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.BRASS_SINGLE_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.WIDE_BRASS_SINGLE_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.SLATE_ALLOY_SINGLE_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.WIDE_SLATE_ALLOY_SINGLE_CANNON_SLIDING_BREECH ,
+					CBCMSBlocks.MILITARY_SLATE_ALLOY_SINGLE_CANNON_SLIDING_BREECH,
+					CBCMSBlocks.WIDE_MILITARY_SLATE_ALLOY_SINGLE_CANNON_SLIDING_BREECH
 			)
 			.register();
 
@@ -182,7 +203,8 @@ public class CBCMSBlockEntities {
 			.validBlocks(
 //			CBCMSBlocks.CAST_IRON_TORPEDO_BARREL, CBCMSBlocks.CAST_IRON_TORPEDO_CHAMBER,
 //			CBCMSBlocks.BRONZE_TORPEDO_BARREL, CBCMSBlocks.BRONZE_TORPEDO_CHAMBER,
-					CBCMSBlocks.STEEL_PROJECTILE_RACK_BARREL, CBCMSBlocks.STEEL_PROJECTILE_RACK_CHAMBER)
+					CBCMSBlocks.STEEL_PROJECTILE_RACK_BARREL, CBCMSBlocks.STEEL_PROJECTILE_RACK_CHAMBER,
+					CBCMSBlocks.STEEL_PROJECTILE_RACK_STABILIZER)
 			.renderer(()-> ProjectileRackBlockRenderer::new)
 			.register();
 

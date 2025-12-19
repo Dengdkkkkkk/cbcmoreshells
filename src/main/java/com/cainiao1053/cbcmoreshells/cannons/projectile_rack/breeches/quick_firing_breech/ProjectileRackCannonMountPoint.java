@@ -93,12 +93,12 @@ public class ProjectileRackCannonMountPoint extends AllArmInteractionPointTypes.
 		if (!(be1 instanceof IProjectileRackBlockEntity cbe1)) return stack;
 		StructureBlockInfo firstInfo = cbe1.cannonBehavior().block();
 
-		if (munition instanceof RackedProjectileBlock) {
+		if (munition instanceof RackedProjectileBlock<?> rpb) {
 			if (barrelLength == 0) return stack;
 			if (firstInfo.state().getBlock() instanceof BigCartridgeBlock cartridge) {
 				if (!simulate) {
 					loadProjectile(stack, munition, poce, bigCannon);
-					breech.setLoadingCooldown(getLoadingCooldown());
+					breech.setLoadingCooldown(rpb.getProjectile(poce.level(), stack).getReloadTime()); //getLoadingCooldown()
 				}
 				if (BigCartridgeBlock.getPowerFromData(firstInfo) == 0) {
 					if (simulate) stack.setCount(1);
@@ -110,7 +110,7 @@ public class ProjectileRackCannonMountPoint extends AllArmInteractionPointTypes.
 			if (!firstInfo.state().isAir()) return stack;
 			if (!simulate) {
 				loadProjectile(stack, munition, poce, bigCannon);
-				breech.setLoadingCooldown(getLoadingCooldown());
+				breech.setLoadingCooldown(rpb.getProjectile(poce.level(), stack).getReloadTime()); //getLoadingCooldown()
 			}
 			ItemStack copy = stack.copy();
 			copy.shrink(1);
@@ -169,7 +169,7 @@ public class ProjectileRackCannonMountPoint extends AllArmInteractionPointTypes.
 
 
 	private static int getLoadingCooldown() {
-		return CBCConfigs.SERVER.cannons.quickfiringBreechLoadingCooldown.get()*6+40;
+		return CBCConfigs.SERVER.cannons.quickfiringBreechLoadingCooldown.get()*2+100;
 	}
 
 }

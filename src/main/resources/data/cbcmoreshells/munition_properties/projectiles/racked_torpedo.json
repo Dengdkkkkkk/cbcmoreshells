@@ -23,5 +23,6 @@
   "explosion_cooldown": 15,
   "buoyancy_factor": 0.27,
   "steady_state_vel": 0.66,
-  "water_damp": 0.18
+  "water_damp": 0.18,
+  "reload_time": 180
 }
