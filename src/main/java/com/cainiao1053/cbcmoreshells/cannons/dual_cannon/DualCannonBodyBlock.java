@@ -47,6 +47,10 @@ public class DualCannonBodyBlock extends DualCannonBaseBlock implements IBE<Dual
 		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.SMALL, Block.box(4, 0, 4, 12, 16, 12));
 	}
 
+	public static DualCannonBodyBlock singleLarge(Properties properties, DualCannonMaterial material) {
+		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.SMALL, Block.box(3, 0, 3, 13, 16, 13));
+	}
+
 	public static DualCannonBodyBlock medium(Properties properties, DualCannonMaterial material) {
 		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.MEDIUM, Block.box(0, 0, 4, 16, 16, 12));
 	}
@@ -55,8 +59,8 @@ public class DualCannonBodyBlock extends DualCannonBaseBlock implements IBE<Dual
 		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.MEDIUM, Block.box(-4, 0, 4, 20, 16, 12));
 	}
 
-	public static DualCannonBodyBlock veryLarge(Properties properties, DualCannonMaterial material) {
-		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.VERY_LARGE, Block.box(-2, 0, -2, 18, 16, 18), Shapes.block());
+	public static DualCannonBodyBlock large(Properties properties, DualCannonMaterial material) {
+		return new DualCannonBodyBlock(properties, material, () -> CannonCastShape.VERY_LARGE, Block.box(-6, 0, 2, 22, 16, 14), Shapes.block());
 	}
 
 	@Override

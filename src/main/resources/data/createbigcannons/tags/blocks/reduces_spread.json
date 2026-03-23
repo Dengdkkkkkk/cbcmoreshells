@@ -60,6 +60,16 @@
     "cbcmoreshells:military_slate_alloy_single_cannon_chamber",
     "cbcmoreshells:military_slate_alloy_single_cannon_barrel",
     "cbcmoreshells:wide_military_slate_alloy_single_cannon_barrel",
-    "cbcmoreshells:wide_military_slate_alloy_single_cannon_chamber"
+    "cbcmoreshells:wide_military_slate_alloy_single_cannon_chamber",
+    "cbcmoreshells:large_brass_dual_cannon_chamber",
+"cbcmoreshells:large_brass_dual_cannon_barrel",
+"cbcmoreshells:large_brass_single_cannon_chamber",
+"cbcmoreshells:large_brass_single_cannon_barrel",
+"cbcmoreshells:large_slate_alloy_single_cannon_barrel",
+"cbcmoreshells:large_slate_alloy_single_cannon_chamber",
+"cbcmoreshells:large_steel_single_cannon_barrel",
+"cbcmoreshells:large_steel_single_cannon_chamber",
+"cbcmoreshells:large_steel_dual_cannon_barrel",
+"cbcmoreshells:large_steel_dual_cannon_chamber"
   ]
 }

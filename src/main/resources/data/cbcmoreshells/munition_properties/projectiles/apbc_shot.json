@@ -1,7 +1,7 @@
 {
-  "entity_damage": 180.0,
-  "durability_mass": 17.0,
-  "renders_invulnerable": false,
+  "entity_damage": 100.0,
+  "durability_mass": 14.0,
+  "renders_invulnerable": true,
   "ignores_invulnerability": true,
   "ignores_entity_armor": true,
   "gravity": -0.05,
@@ -9,12 +9,13 @@
   "quadratic_drag": false,
   "knockback": 2,
   "added_charge_power": 0,
-  "minimum_charge_power": 1.0,
+  "minimum_charge_power": 0.0,
   "can_squib": true,
   "added_recoil": 1.0,
-  "penetration": 2.1,
+  "base_fuze": false,
   "max_charges": 16,
-  "lifetime": 160,
-  "toughness": 1.0,
-  "deflection": 0.42
+  "penetration": 2.55,
+  "lifetime": 240,
+  "toughness": 1,
+  "deflection": 0.5
 }

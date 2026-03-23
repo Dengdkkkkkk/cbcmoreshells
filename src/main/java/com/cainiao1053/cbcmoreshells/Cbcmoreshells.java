@@ -58,9 +58,6 @@ public class Cbcmoreshells {
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CbcmoreshellsClient::clientInit);
 
-
-
-        // 注册事件
         MinecraftForge.EVENT_BUS.register(this);
 
 

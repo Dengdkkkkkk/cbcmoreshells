@@ -2,6 +2,7 @@ package com.cainiao1053.cbcmoreshells.cannons.projectile_rack.breeches.quick_fir
 
 import java.util.List;
 
+import com.cainiao1053.cbcmoreshells.cannons.IReloadCooldown;
 import com.cainiao1053.cbcmoreshells.cannons.projectile_rack.IProjectileRackBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -16,7 +17,7 @@ import rbasamoyai.createbigcannons.cannons.big_cannons.BigCannonBehavior;
 import rbasamoyai.createbigcannons.cannons.big_cannons.IBigCannonBlockEntity;
 import rbasamoyai.createbigcannons.config.CBCConfigs;
 
-public class ProjectileRackQuickfiringBreechBlockEntity extends SmartBlockEntity implements IProjectileRackBlockEntity {
+public class ProjectileRackQuickfiringBreechBlockEntity extends SmartBlockEntity implements IProjectileRackBlockEntity, IReloadCooldown {
 
 	private BigCannonBehavior cannonBehavior;
 	private int openProgress;
@@ -124,5 +125,9 @@ public class ProjectileRackQuickfiringBreechBlockEntity extends SmartBlockEntity
 	}
 
 	public static boolean isInstantOpen() { return getOpeningTime() <= 0; }
+
+	public int getBreechCooldown() {
+		return this.loadingCooldown;
+	}
 
 }

@@ -47,6 +47,9 @@
     "cbcmoreshells:extended_ap_shot",
     "cbcmoreshells:beef_noodle",
     "cbcmoreshells:normal_antiair_he_shell",
-    "cbcmoreshells:normal_incendiary_he_shell"
+    "cbcmoreshells:normal_incendiary_he_shell",
+    "cbcmoreshells:apbc_shell",
+    "cbcmoreshells:normal_apbc_shell",
+    "cbcmoreshells:extended_antiair_he_shell"
   ]
 }

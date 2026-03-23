@@ -1,5 +1,6 @@
 package com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.breeches.quick_firing_breech;
 
+import com.cainiao1053.cbcmoreshells.cannons.IReloadCooldown;
 import com.cainiao1053.cbcmoreshells.cannons.torpedo_tube.ITorpedoTubeBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -14,7 +15,7 @@ import rbasamoyai.createbigcannons.config.CBCConfigs;
 
 import java.util.List;
 
-public class TorpQuickfiringBreechBlockEntity extends SmartBlockEntity implements ITorpedoTubeBlockEntity {
+public class TorpQuickfiringBreechBlockEntity extends SmartBlockEntity implements ITorpedoTubeBlockEntity, IReloadCooldown {
 
 	private BigCannonBehavior cannonBehavior;
 	private int openProgress;
@@ -122,5 +123,9 @@ public class TorpQuickfiringBreechBlockEntity extends SmartBlockEntity implement
 	}
 
 	public static boolean isInstantOpen() { return getOpeningTime() <= 0; }
+
+	public int getBreechCooldown() {
+		return this.loadingCooldown;
+	}
 
 }

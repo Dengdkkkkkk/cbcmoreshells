@@ -58,9 +58,9 @@ public class CommandDeployerBlockEntity extends SmartBlockEntity {
     @Override
     public void tick() {
         super.tick();
-        if (level.isClientSide) {
-            //tickClient();
-        }
+//        if (level.isClientSide) {
+//            //tickClient();
+//        }
     }
 
 

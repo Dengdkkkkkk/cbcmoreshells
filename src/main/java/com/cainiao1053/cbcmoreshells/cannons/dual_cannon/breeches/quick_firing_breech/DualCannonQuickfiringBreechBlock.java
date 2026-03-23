@@ -92,12 +92,20 @@ public class DualCannonQuickfiringBreechBlock extends DualCannonBaseBlock implem
 		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(-5, 0, 3, 21, 16, 13));
 	}
 
+	public static DualCannonQuickfiringBreechBlock large(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
+			return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(-7, 0, 1, 23, 16, 15));
+	}
+
 	public static DualCannonQuickfiringBreechBlock singleMedium(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
 		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(4, 0, 4, 12, 16, 12));
 	}
 
 	public static DualCannonQuickfiringBreechBlock singleWide(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
 		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(3, 0, 3, 13, 16, 13));
+	}
+
+	public static DualCannonQuickfiringBreechBlock singleLarge(Properties properties, DualCannonMaterial material, NonNullSupplier<? extends Block> slidingConversion) {
+		return new DualCannonQuickfiringBreechBlock(properties, material, slidingConversion, Block.box(2, 0, 2, 14, 16, 14));
 	}
 
 	@Override

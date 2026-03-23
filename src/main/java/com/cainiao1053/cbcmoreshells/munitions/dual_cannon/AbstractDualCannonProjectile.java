@@ -7,6 +7,7 @@ import com.cainiao1053.cbcmoreshells.network.ClientboundCBCMSSplashPacket;
 import com.cainiao1053.cbcmoreshells.network.ClientboundCBCMSTrailPacket;
 import com.mojang.math.Constants;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -48,6 +49,8 @@ import rbasamoyai.createbigcannons.network.ClientboundPlayBlockHitEffectPacket;
 import rbasamoyai.createbigcannons.utils.CBCUtils;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public abstract class AbstractDualCannonProjectile extends AbstractCannonProjectile {
 
@@ -311,6 +314,38 @@ public abstract class AbstractDualCannonProjectile extends AbstractCannonProject
 		boolean shatter = false;
 		shatter |= this.onImpact(blockHitResult, new ImpactResult(outcome, shatter), projectileContext);
 		return new ImpactResult(outcome, shatter);
+	}
+
+	public static double getHitNearbyAverageToughness(Level level, BlockPos pos, Direction face) {
+		double accumulatedArmor = 0;
+		for (int depth = 0; depth < 3; depth++) {
+			for (int a = -1; a <= 1; a++) {
+				for (int b = -1; b <= 1; b++) {
+					BlockPos targetPos;
+
+					switch (face) {
+						case UP -> targetPos = pos.offset(a, -depth, b);
+						case DOWN -> targetPos = pos.offset(a, depth, b);
+						case EAST -> targetPos = pos.offset(-depth, a, b);
+						case WEST -> targetPos = pos.offset(depth, a, b);
+						case SOUTH -> targetPos = pos.offset(a, b, -depth);
+						case NORTH -> targetPos = pos.offset(a, b, depth);
+
+						default -> targetPos = pos;
+					}
+					BlockState state = level.getBlockState(targetPos);
+					BlockArmorPropertiesProvider blockArmor = BlockArmorPropertiesHandler.getProperties(state);
+					accumulatedArmor += blockArmor.toughness(level, state, targetPos, true);
+				}
+			}
+		}
+		accumulatedArmor /= 27;
+
+		return accumulatedArmor;
+	}
+
+	public boolean alternativePenetration(){
+		return false;
 	}
 
 	@Override

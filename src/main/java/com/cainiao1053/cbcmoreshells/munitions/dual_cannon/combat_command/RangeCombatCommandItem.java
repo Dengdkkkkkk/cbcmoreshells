@@ -18,7 +18,7 @@ public class RangeCombatCommandItem extends CombatCommandBaseItem {
 
 	@Override
 	public float getCommandLifetimeModifier() {
-		return 1.5f;
+		return 1.6f;
 	}
 
 	@Override

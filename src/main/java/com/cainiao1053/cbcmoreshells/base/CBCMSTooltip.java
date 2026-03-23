@@ -408,7 +408,7 @@ public class CBCMSTooltip {
 		TooltipHelper.Palette palette = getPalette(level, stack);
 		String key1 = stack.getDescriptionId();
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
-		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main", durabilityMass, initVel, projectileSpread, minimumSpread,
+		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main", durabilityMass, String.format("%.0f",initVel*20), projectileSpread, minimumSpread,
 				String.format("%.1f",(float)lifetime/20),String.format("%.0f",Math.acos(deflection)*180/Math.PI), smashToughness,
 				maximumMomentum, reloadTimeCoef), palette.primary(), palette.highlight(), 1));
 	}
@@ -469,6 +469,11 @@ public class CBCMSTooltip {
 		String key1 = stack.getDescriptionId() + ".tooltip";
 		tooltip.add(Components.translatable(key1).withStyle(ChatFormatting.GRAY));
 		tooltip.addAll(TooltipHelper.cutStringTextComponent(I18n.get(key1 + ".main"), palette.primary(), palette.highlight(), 1));
+	}
+
+	public static void appendCannonComboInfo(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+		appendCombatCommandMaterialInfo(stack, level, tooltip, flag);
+		//do something
 	}
 
 

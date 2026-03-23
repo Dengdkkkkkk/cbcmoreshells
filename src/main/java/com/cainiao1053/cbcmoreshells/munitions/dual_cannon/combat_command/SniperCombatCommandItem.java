@@ -28,7 +28,7 @@ public class SniperCombatCommandItem extends CombatCommandBaseItem {
 
 	@Override
 	public float getCommandLifetimeModifier() {
-		return 1.8f;
+		return 2f;
 	}
 
 	@Override

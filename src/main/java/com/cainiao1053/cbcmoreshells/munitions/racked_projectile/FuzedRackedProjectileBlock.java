@@ -136,7 +136,7 @@ public abstract class FuzedRackedProjectileBlock<BLOCK_ENTITY extends FuzedBlock
 				level.addFreshEntity(projectile);
 				playSoundForLaunching(level, pos);
 				//level.setBlock(pos, Blocks.AIR.defaultBlockState(),2);
-				level.setBlock(pos, Blocks.IRON_BARS.defaultBlockState(),1);
+				level.setBlock(pos, Blocks.IRON_BARS.defaultBlockState(),11);
 			}
 		}
 	}

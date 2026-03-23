@@ -88,6 +88,7 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 	private float commandCooldownModifier = 1;
 	private float commandDurationModifier = 1;
 	private int barrelInverter = 1;
+	private float additionalSpreadCoef = 1;
 
 	Logger LOGGER = Cbcmoreshells.LOGGER;
 
@@ -471,7 +472,8 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 
 			projectile.shoot(vec.x, vec.y, vec.z,
 			projectile.getInitVel(), //init vel
-			(Math.max(projectile.getProjectileSpread() - spreadSub*subLength, projectile.getProjectileMinimumSpread()+minimumSpread))*this.commandSpreadModifier * this.equipmentSpreadModifier); //spread
+			(Math.max(projectile.getProjectileSpread() - spreadSub*subLength,
+					projectile.getProjectileMinimumSpread()+minimumSpread))*this.commandSpreadModifier * this.equipmentSpreadModifier * this.additionalSpreadCoef); //spread
 
 			projectile.xRotO = projectile.getXRot();
 			projectile.yRotO = projectile.getYRot();
@@ -502,7 +504,8 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 
 			secondary_projectile.shoot(vec.x, vec.y, vec.z,
 			secondary_projectile.getInitVel(), //init vel
-			(secondary_projectile.getProjectileMinimumSpread()+Math.max(secondary_projectile.getProjectileSpread() - spreadSub*subLength, minimumSpread))*this.commandSpreadModifier * this.equipmentSpreadModifier); //spread
+			(secondary_projectile.getProjectileMinimumSpread()+Math.max(secondary_projectile.getProjectileSpread()
+					- spreadSub*subLength, minimumSpread))*this.commandSpreadModifier * this.equipmentSpreadModifier * this.additionalSpreadCoef); //spread
 
 			secondary_projectile.xRotO = secondary_projectile.getXRot();
 			secondary_projectile.yRotO = secondary_projectile.getYRot();
@@ -561,6 +564,14 @@ public class MountedDualCannonContraption extends AbstractMountedCannonContrapti
 			return CBCMSSoundEvents.DUAL_CANNON_2.getMainEvent();
 		}
 		return CBCMSSoundEvents.DUAL_CANNON_3.getMainEvent();
+	}
+
+	public float getAdditionalSpreadCoef(){
+		return this.additionalSpreadCoef;
+	}
+
+	public void setAdditionalSpreadCoef(float additionalSpreadCoef){
+		this.additionalSpreadCoef = additionalSpreadCoef;
 	}
 
 

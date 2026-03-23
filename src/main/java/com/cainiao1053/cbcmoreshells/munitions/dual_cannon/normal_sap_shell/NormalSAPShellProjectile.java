@@ -1,6 +1,7 @@
 package com.cainiao1053.cbcmoreshells.munitions.dual_cannon.normal_sap_shell;
 
 import com.cainiao1053.cbcmoreshells.CBCMSBlocks;
+import com.cainiao1053.cbcmoreshells.Cbcmoreshells;
 import com.cainiao1053.cbcmoreshells.index.CBCMSMunitionPropertiesHandlers;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.DualCannonProjectileBlock;
 import com.cainiao1053.cbcmoreshells.munitions.dual_cannon.FuzedDualCannonProjectile;
@@ -41,7 +42,7 @@ public class NormalSAPShellProjectile extends FuzedDualCannonProjectile {
 
 	@Override
 	protected void detonate(Position position) {
-		float explosivePower = this.getAllProperties().explosion().explosivePower()*((this.getDurabilityModifier()-1)/1.5f+1);
+		float explosivePower = this.getAllProperties().explosion().explosivePower()*(this.getDurabilityModifier()*0.82f + 0.18f);
 		ShellExplosion explosion = new ShellExplosion(this.level(), this, this.indirectArtilleryFire(false), position.x(),
 			position.y(), position.z(), explosivePower, false,
 			CBCConfigs.SERVER.munitions.damageRestriction.get().explosiveInteraction());
@@ -70,7 +71,9 @@ public class NormalSAPShellProjectile extends FuzedDualCannonProjectile {
 
 		BallisticPropertiesComponent ballistics = this.getBallisticProperties();
 		BlockArmorPropertiesProvider blockArmor = BlockArmorPropertiesHandler.getProperties(state);
-		boolean unbreakable = projectileContext.griefState() == CBCCfgMunitions.GriefState.NO_DAMAGE || state.getDestroySpeed(this.level(), pos) == -1;
+		//boolean unbreakable = projectileContext.griefState() == CBCCfgMunitions.GriefState.NO_DAMAGE || state.getDestroySpeed(this.level(), pos) == -1;
+		boolean penetrate = false;
+		boolean surfaceImpact = this.canHitSurface();
 
 		Vec3 accel = this.getForces(this.position(), this.getDeltaMovement());
 		Vec3 curVel = this.getDeltaMovement().add(accel);
@@ -78,37 +81,71 @@ public class NormalSAPShellProjectile extends FuzedDualCannonProjectile {
 		Vec3 normal = CBCUtils.getSurfaceNormalVector(this.level(), blockHitResult);
 		double incidence = Math.max(0, curVel.normalize().dot(normal.reverse()));
 		double velMag = curVel.length();
-		double mass = this.getProjectileMass();
-		double bonusMomentum = 1 + Math.max(0, (velMag - 2f)
-				* 0.15f);
 		double incidentVel = velMag * incidence;
-		double rawMomentum = mass * bonusMomentum * velMag;
-		double excessMomentum = 0;
-		double maximumMomentum = getMaximumMomentum();
-		if(rawMomentum > maximumMomentum) {
-			rawMomentum = maximumMomentum;
-			excessMomentum = rawMomentum - maximumMomentum;
-		}
-		//double momentum = mass * incidentVel * bonusMomentum;
-		double momentum = rawMomentum * incidence;
-
+		double mass = this.getProjectileMass();
 		double toughness = blockArmor.toughness(this.level(), state, pos, true);
+		float durabilityPenalty = 0;
 
 		double projectileDeflection = ballistics.deflection();
 		double baseChance = CBCConfigs.SERVER.munitions.baseProjectileBounceChance.getF();
 		double bounceChance = projectileDeflection < 1e-2d || incidence > projectileDeflection ? 0 : Math.max(baseChance, 1 - incidence / projectileDeflection);
 
-		boolean penetrate = false;
-		if(momentum>toughness*2){
-			penetrate = true;
-		}else if(momentum > toughness*0.5){
-			double penetrateChance = (momentum/toughness-0.15)/2;
-			if(this.level().getRandom().nextDouble()<penetrateChance){
+		if(this.alternativePenetration()){
+			//
+			double averageToughness = getHitNearbyAverageToughness(level(), pos, blockHitResult.getDirection());
+			double penetrateToughness = mass * mass * 0.4 + mass * 1.2 - 1.5;
+			if(penetrateToughness > averageToughness){
 				penetrate = true;
 			}
-		}
+		}else{
+			double bonusMomentum = 1 + Math.max(0, (velMag - 2f)
+					* 0.15f);
+			//double incidentVel = velMag * incidence;
+			double rawMomentum = mass * bonusMomentum * velMag;
+			double excessMomentum = 0;
+			double maximumMomentum = getMaximumMomentum();
+			if(rawMomentum > maximumMomentum) {
+				rawMomentum = maximumMomentum;
+				excessMomentum = rawMomentum - maximumMomentum;
+			}
+			//double momentum = mass * incidentVel * bonusMomentum;
+			double momentum = rawMomentum * incidence;
+			durabilityPenalty = (float) toughness / (float) incidentVel + (float)excessMomentum;
 
-		boolean surfaceImpact = this.canHitSurface();
+			if(momentum>toughness*2){
+				penetrate = true;
+			}else if(momentum > toughness*0.5){
+				double penetrateChance = (momentum/toughness-0.15)/2;
+				if(this.level().getRandom().nextDouble()<penetrateChance){
+					penetrate = true;
+				}
+			}
+		}
+//		double bonusMomentum = 1 + Math.max(0, (velMag - 2f)
+//				* 0.15f);
+//		double incidentVel = velMag * incidence;
+//		double rawMomentum = mass * bonusMomentum * velMag;
+//		double excessMomentum = 0;
+//		double maximumMomentum = getMaximumMomentum();
+//		if(rawMomentum > maximumMomentum) {
+//			rawMomentum = maximumMomentum;
+//			excessMomentum = rawMomentum - maximumMomentum;
+//		}
+//		//double momentum = mass * incidentVel * bonusMomentum;
+//		double momentum = rawMomentum * incidence;
+//		durabilityPenalty = (float) toughness / (float) incidentVel + (float)excessMomentum;
+//
+//
+//
+//		if(momentum>toughness*2){
+//			penetrate = true;
+//		}else if(momentum > toughness*0.5){
+//			double penetrateChance = (momentum/toughness-0.15)/2;
+//			if(this.level().getRandom().nextDouble()<penetrateChance){
+//				penetrate = true;
+//			}
+//		}
+
 		ImpactResult.KinematicOutcome outcome;
 		if (!this.level().isClientSide && (penetrate || this.getSmashToughness()>toughness)) {
 			outcome = ImpactResult.KinematicOutcome.PENETRATE;
@@ -117,7 +154,6 @@ public class NormalSAPShellProjectile extends FuzedDualCannonProjectile {
 		} else {
 			outcome = ImpactResult.KinematicOutcome.STOP;
 		}
-		float durabilityPenalty = (float) toughness / (float) incidentVel + (float)excessMomentum;
 
 		state.onProjectileHit(this.level(), state, blockHitResult, this);
 		if (!this.level().isClientSide) {
@@ -134,16 +170,11 @@ public class NormalSAPShellProjectile extends FuzedDualCannonProjectile {
 						hitLoc.x, hitLoc.y, hitLoc.z, (float) effectNormal.x, (float) effectNormal.y, (float) effectNormal.z));
 			}
 		}
+		boolean shatter = true;
 		if (outcome == ImpactResult.KinematicOutcome.PENETRATE) {
-//			if(momentum>toughness*3){
-//				this.setProjectileMass(incidentVel < 1e-4d ? 0 : Math.max(this.getProjectileMass() - durabilityPenalty*1.25f, 0));
-//			}else if (momentum>toughness*2){
-//				this.setProjectileMass(incidentVel < 1e-4d ? 0 : Math.max(this.getProjectileMass() - durabilityPenalty, 0));
-//			} else{
-//				this.setProjectileMass(0.1f);
-//			}
 			this.setProjectileMass(0);
 			this.level().setBlock(pos, Blocks.AIR.defaultBlockState(), DualCannonProjectileBlock.UPDATE_ALL_IMMEDIATE);
+			shatter |= this.onImpact(blockHitResult, new ImpactResult(outcome, shatter), projectileContext);
 		} else {
 			if (outcome == ImpactResult.KinematicOutcome.STOP) {
 				this.setProjectileMass(0);
@@ -160,8 +191,7 @@ public class NormalSAPShellProjectile extends FuzedDualCannonProjectile {
 				this.level().playSound(null, spallLoc.x, spallLoc.y, spallLoc.z, sound.getBreakSound(), SoundSource.BLOCKS,
 						sound.getVolume(), sound.getPitch());
 		}
-		boolean shatter = false;
-		shatter |= this.onImpact(blockHitResult, new ImpactResult(outcome, shatter), projectileContext);
+		//shatter |= this.onImpact(blockHitResult, new ImpactResult(outcome, shatter), projectileContext);
 		return new ImpactResult(outcome, shatter);
 	}
 

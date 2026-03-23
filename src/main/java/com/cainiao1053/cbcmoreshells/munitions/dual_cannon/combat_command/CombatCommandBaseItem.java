@@ -65,42 +65,7 @@ public class CombatCommandBaseItem extends Item {
 		CompoundTag tag = stack.getOrCreateTag();
 		//if(!level.isClientSide){
 			if(!player.isShiftKeyDown()){
-//				List<MountedDualCannonContraption> dualCannons = findCannons(level,player.position(),48);
-//				this.recordedMaterial = DualCannonMaterial.fromNameOrNull(CBCUtils.location(tag.getString("Material")));
-//				//LOGGER.info("item Material: " + this.recordedMaterial);
-//				//this.recordedMaterial = DualCannonMaterial.fromNameOrNull(CBCUtils.location(getMaterial(player.getItemInHand(hand)).getString("Material")));
-//				if(this.recordedMaterial == null){
-//					this.recordedMaterial = CBCMSDualCannonMaterials.CAST_IRON;
-//					tag.putString("Material", recordedMaterial.name().toString());
-//					stack.setTag(tag);
-//				}
-//				for(MountedDualCannonContraption dualCannon : dualCannons){
-//					if(dualCannon.getCannonMaterial() != recordedMaterial){
-//						continue;
-//					}
-//					if(dualCannon.getCommandActivation()||dualCannon.getCommandCooldown()>0){
-//						continue;
-//					}
-//					dualCannon.activateCombatCommand();
-//					dualCannon.setCommandModifiers(getCommandDurabilityModifier(), getCommandReloadTimeModifier(), getCommandLifetimeModifier(), getCommandSpreadModifier());
-//					cannonCount++;
-//					if(!player.isCreative()){
-//						stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-////                        if(stack.hasTag() && stack.getTag().getCompound("Damage").isEmpty() && stack.getTag().getInt("Damage")<=0){
-////							break;
-////						}
-//						if(stack.isEmpty()){
-//							break;
-//						}
-//					}
-//					if(cannonCount == getMaximumUseAtOnce()){
-//						break;
-//					}
-//				}
-//				if(!level.isClientSide){
-//					Component msg = Component.translatable("item.cbcmoreshells.combat_command_base.on_effect", cannonCount);
-//					player.sendSystemMessage(msg);
-//				}
+
 			}else{
 					MountedDualCannonContraption cannon = findNearestCannon(level,player.position(),32);
 					if(cannon==null){

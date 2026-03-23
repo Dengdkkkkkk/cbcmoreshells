@@ -42,7 +42,8 @@ public class NormalAPShellProjectile extends FuzedDualCannonProjectile {
 
 	@Override
 	protected void detonate(Position position) {
-		float explosivePower = this.getAllProperties().explosion().explosivePower();
+		float explosivePower = this.getAllProperties().explosion().explosivePower() * ((this.getDurabilityModifier()) * 0.47f + 0.4f);
+		//float explosivePower = ((this.getDurabilityModifier()) * 0.5f + 0.4f) * initialPower;
 		ShellExplosion explosion = new ShellExplosion(this.level(), this, this.indirectArtilleryFire(false), position.x(),
 			position.y(), position.z(), explosivePower, false,
 			CBCConfigs.SERVER.munitions.damageRestriction.get().explosiveInteraction());
@@ -95,7 +96,6 @@ public class NormalAPShellProjectile extends FuzedDualCannonProjectile {
 			rawMomentum = maximumMomentum;
 			excessMomentum = rawMomentum - maximumMomentum;
 		}
-		//double momentum = mass * incidentVel * bonusMomentum;
 		double momentum = rawMomentum * incidence;
 
 		double toughness = blockArmor.toughness(this.level(), state, pos, true);

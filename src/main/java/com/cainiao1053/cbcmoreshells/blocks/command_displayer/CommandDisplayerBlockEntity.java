@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.valkyrienskies.core.api.ships.Ship;
 import rbasamoyai.createbigcannons.cannon_control.contraption.PitchOrientedContraptionEntity;
 
+import static com.cainiao1053.cbcmoreshells.utils.CBCMSBallisticUtils.*;
+
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
@@ -89,6 +91,41 @@ public class CommandDisplayerBlockEntity extends SmartBlockEntity {
     }
 
     @OnlyIn(Dist.CLIENT)
+    public void displayCannonTrajectory(MountedDualCannonContraption.CannonPose pose, @Nullable String keySuffix) {
+        //if (this.level == null || !this.level.isClientSide()) return;
+        if (pose == null) return;
+        Vec3 start = pose.muzzleWorld();
+        Vec3 dir = pose.forwardUnit();
+        if (dir == null || dir.lengthSqr() < 1e-12) return;
+
+        //Vec3 end = start.add(dir.scale(length));
+
+        String key = "cannon_ray_" + getBlockPos().asLong();
+        if (keySuffix != null && !keySuffix.isEmpty()) {
+            key += "_" + keySuffix;
+        }
+
+        double pitch = vecToPitch(dir);
+        //Cbcmoreshells.LOGGER.info("pitch: " + pitch);
+        //LOGGER.info("dir : " + dir);
+
+        for(int i=1; i<10; i++){
+            Vec3 cannonVec = dir.scale(i * 40);
+            double dist = new Vec3(cannonVec.x, 0, cannonVec.z).length();
+            //LOGGER.info("dist: " + dist);
+            double lift = cannonFunction(pitch, dist, 0.04, 160, 0.989);
+            //Cbcmoreshells.LOGGER.info("lift " + lift);
+            Vec3 currentStart = start.add(cannonVec.x, lift, cannonVec.z);
+            //Cbcmoreshells.LOGGER.info("currentStart " + currentStart);
+            Vec3 currentEnd = currentStart.add(0,-0.25,0);
+            CbcmoreshellsClient.CLIENT_LERPED_OUTLINER
+                    .showLine(key + "_" + i, currentStart, currentEnd)
+                    .colored(GREEN)
+                    .lineWidth(0.25f);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
     protected void tickClient() {
         if (!getBlockState().getValue(BlockStateProperties.POWERED)) {
             return;
@@ -124,6 +161,7 @@ public class CommandDisplayerBlockEntity extends SmartBlockEntity {
             }
             if (level.isClientSide) {
                 displayCannonStatus(cannonPose, 1, String.valueOf(cannon.getId()),colorIndex);
+                //displayCannonTrajectory(cannonPose, String.valueOf(cannon.getId()));
             }
         }
 

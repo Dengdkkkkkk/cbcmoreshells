@@ -16,7 +16,7 @@
   "explosive_power": 6.5,
   "max_charges": 16,
   "penetration": 2.55,
-  "lifetime": 160,
+  "lifetime": 240,
   "toughness": 1,
   "deflection": 0.26
 }
